@@ -25,9 +25,8 @@ public class ShooterEnemy : WalkingEnemy
     /// </summary>
     protected void CannonUpdate()
     {
-        Vector3 targetDirection = MoonTransform.position - Cannon.position;
+        Vector3 targetDirection = LevelGlobals.Moon.transform.position - Cannon.position;
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 

@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class WalkingEnemy : OrbitalEnemy
 {
-    public float Height;
+    protected float _height;
 
+    //TODO: Hacer parones aleatorios
 
-    protected new void Start()
+    public override void Initialize(float angle, float orbitalRadius = -1)
     {
-        SetRandomDirection();
+        _moving = true;
+        _currentAngle = angle;
+        _height = GetComponent<Collider2D>().bounds.size.y;
+        _orbitRadius = LevelGlobals.PlanetRadius + _height/2f;
 
-        //Orbitar a ras de suelo
-        _orbitRadius = EarthRadius + Height/2f;
+        SetRandomDirection();
+        Locate();
+        Orientate();
     }
 }

@@ -19,7 +19,7 @@ public class MoonController : MonoBehaviour
     [HideInInspector]
     public float startingOrbitRadius = 1f;
 
-    private float currentAngle = 0f;
+    public float currentAngle = 0f;
     [SerializeField]
     private bool isAttacking, isChargingAttack;
     private Collider2D col;
@@ -124,5 +124,4 @@ public class MoonController : MonoBehaviour
         currentCharge = 0f;
         yield return new WaitForEndOfFrame();
     }
-
 }

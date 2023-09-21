@@ -6,15 +6,24 @@ public class VerticalEnemy : EnemyBase
 {
     public float LaunchDelay = 3;
     public float TimeToLiveLaunched = 5;
+    protected float _height;
 
-    protected void Start()
+
+    public override void Initialize(float angle, float orbitalRadius = -1)
     {
+        _currentAngle = angle;
+        _height = GetComponent<Collider2D>().bounds.size.y;
+        _orbitRadius = LevelGlobals.PlanetRadius + _height/2f;
+
+        Locate();
+        Orientate();
+
         StartCoroutine(WaitForLaunch());
     }
 
     protected override void Move() 
     {
-        Vector3 direction = transform.position - MoonTransform.position;
+        Vector3 direction = transform.position - LevelGlobals.Moon.transform.position;
         transform.position += direction.normalized * Speed;
     }
 
@@ -22,10 +31,10 @@ public class VerticalEnemy : EnemyBase
     {
         yield return new WaitForSeconds(LaunchDelay);
         _moving = true;
-        StartCoroutine(TimeToLiveCoroutine());
+        StartCoroutine(TimeToLiveCorotine());
     }
 
-    protected IEnumerator TimeToLiveCoroutine()
+    protected IEnumerator TimeToLiveCorotine()
     {
         yield return new WaitForSeconds(TimeToLiveLaunched);
         Destroy(gameObject);

@@ -1,37 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class OrbitalEnemy : EnemyBase
 {
-    protected float _orbitRadius = 10;
-
-    protected override bool _moving { get; set; } = true;
     protected int _direction = 1; //1 right, -1 left
-    protected float _currentAngle = 0;
 
 
-    protected void Start()
+    public override void Initialize(float angle, float orbitalRadius = -1)
     {
+        _moving = true;
+        _currentAngle = angle;
+        _orbitRadius = LevelGlobals.MoonOrbitRadius;
         SetRandomDirection();
-        _orbitRadius = MoonOrbitRadius;
+        Locate();
+        Orientate();
     }
 
     protected override void Move()
     {
-        //TODO: Hacer parones aleatorios
         _currentAngle += _direction * Speed * Time.deltaTime;
-
-        float newX = OrbitCenter.x + _orbitRadius * Mathf.Cos(_currentAngle);
-        float newY = OrbitCenter.y + _orbitRadius * Mathf.Sin(_currentAngle);
-
-        transform.position = new Vector2(newX, newY);
+        Locate();
+        Orientate();
     }
 
-    //Direccion inicial aleatoria
+    //Direccion inicial aleatoria (con flip de sprite)
     protected void SetRandomDirection()
     {
         int rand = Random.Range(0, 2);
-        _direction = rand == 0 ? -1 : 1;
+        _direction = (rand == 0) ? 1:-1;
+
+        //Hacer flip con escala
+        Vector3 newScale = transform.localScale;
+        if (_direction == 1)
+            newScale.x = -Mathf.Abs(newScale.x);
+        else
+            newScale.x = Mathf.Abs(newScale.x);
+        transform.localScale = newScale;
     }
 }

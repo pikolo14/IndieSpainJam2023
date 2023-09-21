@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class BulletEnemy : EnemyBase
 {
-    protected override bool _moving { get; set; } = true;
     public float TimeToLive = 5;
 
     protected void Start()
     {
+        _moving = true;
         StartCoroutine(TimeToLiveCoroutine());
-    }
+    } 
 
     protected override void Move()
     {
