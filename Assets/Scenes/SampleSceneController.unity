@@ -372,14 +372,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HumanPrefab: {fileID: 2540599309485035188, guid: d98fcca27a6d71546a89248ed9c84140, type: 3}
-  RocketPrefab: {fileID: 0}
+  RocketPrefab: {fileID: 3245040213486577971, guid: 86b0c00e07b509f4f818a6f4a07ca9e1, type: 3}
   TankPrefab: {fileID: 0}
   SatellitePrefab: {fileID: 0}
   BulletPrefab: {fileID: 0}
   CityPrefab: {fileID: 0}
   Spawning: 1
-  SpawnDelay: 1
   SpawnAngleRange: 90
+  SpawnPropertiesPerDifficulty:
+  - Human:
+      SpawnDelay: 1
+      MaxUnits: 10
+      ElapsedTime: 0
+    Rocket:
+      SpawnDelay: 2
+      MaxUnits: 5
+      ElapsedTime: 0
+    Tank:
+      SpawnDelay: 0
+      MaxUnits: 0
+      ElapsedTime: 0
+    Satellite:
+      SpawnDelay: 0
+      MaxUnits: 0
+      ElapsedTime: 0
+  CurrentSpawnProperties:
+    Human:
+      SpawnDelay: 0
+      MaxUnits: 0
+      ElapsedTime: 0
+    Rocket:
+      SpawnDelay: 0
+      MaxUnits: 0
+      ElapsedTime: 0
+    Tank:
+      SpawnDelay: 0
+      MaxUnits: 0
+      ElapsedTime: 0
+    Satellite:
+      SpawnDelay: 0
+      MaxUnits: 0
+      ElapsedTime: 0
 --- !u!4 &629267084
 Transform:
   m_ObjectHideFlags: 0
@@ -716,6 +749,7 @@ MonoBehaviour:
   maxCharge: 3
   chargeRate: 1
   chargeTime: 0.25
+  recoveryTime: 0.5
   chargeDownCurve:
     serializedVersion: 2
     m_Curve:

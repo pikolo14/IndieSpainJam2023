@@ -21,9 +21,9 @@ public class VerticalEnemy : EnemyBase
         StartCoroutine(WaitForLaunch());
     }
 
-    protected override void Move() 
+    protected override void Move()
     {
-        Vector3 direction = transform.position - LevelGlobals.Moon.transform.position;
+        Vector3 direction = transform.position - LevelGlobals.PlanetTransform.position;
         transform.position += direction.normalized * Speed;
     }
 

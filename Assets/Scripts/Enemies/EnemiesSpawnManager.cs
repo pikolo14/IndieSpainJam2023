@@ -25,14 +25,14 @@ public class EnemiesSpawnManager : MonoBehaviour
     {
         if(Spawning)
         {
-            UpdateEnemySpawning(HumanPrefab, CurrentSpawnProperties.Human, LevelGlobals.HumansCount);
-            UpdateEnemySpawning(RocketPrefab, CurrentSpawnProperties.Rocket, LevelGlobals.RocketsCount);
-            UpdateEnemySpawning(TankPrefab, CurrentSpawnProperties.Tank, LevelGlobals.TanksCount);
-            UpdateEnemySpawning(SatellitePrefab, CurrentSpawnProperties.Satellite, LevelGlobals.SatellitesCount);
+            UpdateEnemySpawning(HumanPrefab, ref CurrentSpawnProperties.Human, LevelGlobals.HumansCount);
+            UpdateEnemySpawning(RocketPrefab, ref CurrentSpawnProperties.Rocket, LevelGlobals.RocketsCount);
+            UpdateEnemySpawning(TankPrefab, ref CurrentSpawnProperties.Tank, LevelGlobals.TanksCount);
+            UpdateEnemySpawning(SatellitePrefab, ref CurrentSpawnProperties.Satellite, LevelGlobals.SatellitesCount);
         }
     }
 
-    public void UpdateEnemySpawning(GameObject prefab, EnemySpawnProperties properties, int count)
+    public void UpdateEnemySpawning(GameObject prefab, ref EnemySpawnProperties properties, int count)
     {
         //Comprobar que no se ha alcanzado limite de unidades
         if(count < properties.MaxUnits)
@@ -52,7 +52,7 @@ public class EnemiesSpawnManager : MonoBehaviour
         float spawnAngle = LevelGlobals.Moon.currentAngle;
         spawnAngle += Random.Range(-SpawnAngleRange * Mathf.Deg2Rad / 2f, SpawnAngleRange * Mathf.Deg2Rad / 2f);
 
-        var go = Instantiate(HumanPrefab, LevelGlobals.PlanetTransform);
+        var go = Instantiate(prefab, LevelGlobals.PlanetTransform);
         go.GetComponent<EnemyBase>().Initialize(spawnAngle);
     }
 
