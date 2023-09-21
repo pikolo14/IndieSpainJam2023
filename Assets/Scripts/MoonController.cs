@@ -12,9 +12,9 @@ public class MoonController : MonoBehaviour
     [Header("Charge")]
     public float maxCharge = 3f;
     public float chargeRate = 1f;
-    public float chargeTime = 1f;
-    //public float[] chargeSteps;
-    //public AnimationCurve chargeCurve;
+    public float chargeTime = .25f;
+    public float recoveryTime = .5f;
+    public AnimationCurve chargeDownCurve, chargeUpCurve;
 
     [HideInInspector]
     public float startingOrbitRadius = 1f;
@@ -67,10 +67,12 @@ public class MoonController : MonoBehaviour
 
     private void Movement()
     {
-        if (isAttacking || isChargingAttack) return;
+        //if (isAttacking || isChargingAttack) return;
         orbitTarget.position = orbitTarget.position;
 
-        currentAngle += (Input.GetAxis("Horizontal") * -1f) * orbitSpeed * Time.deltaTime; //By using GetAxis we already have acceleration
+        float inputValue = (!isAttacking || !isChargingAttack) ? (Input.GetAxis("Horizontal") * -1f) : 0;
+
+        currentAngle += inputValue * orbitSpeed * Time.deltaTime; //By using GetAxis we already have acceleration
 
         float newX = (orbitTarget.position.x + orbitRadius + GetMoonRadius()) * Mathf.Cos(currentAngle);
         float newY = (orbitTarget.position.y + orbitRadius + GetMoonRadius()) * Mathf.Sin(currentAngle);
@@ -90,25 +92,37 @@ public class MoonController : MonoBehaviour
         Gizmos.DrawLine(orbitTarget.position, orbitTarget.position + Vector3.up * (orbitRadius + GetMoonRadius()));
         Gizmos.DrawWireSphere(orbitTarget.position, (orbitTarget.position + Vector3.up * (orbitRadius + GetMoonRadius())).y);
         Gizmos.DrawWireSphere(orbitTarget.position + Vector3.up * (orbitRadius + GetMoonRadius()), GetMoonRadius());
-
     }
 
     public IEnumerator AttackCoroutine(float attackCharge)
     {
         isAttacking = true;
         float elapsed = 0f;
-        float lowerLimit = orbitTarget.GetComponent<Collider2D>().bounds.extents.y + GetMoonRadius();
-        //Go down
+        float lowerLimit = orbitTarget.GetComponent<Collider2D>().bounds.extents.y;
+        Debug.Log("lowerLimit: " + lowerLimit);
+        float startingPos = orbitRadius;
+        //-- Go down --
         while (elapsed < chargeTime)
         {
-            orbitRadius = 
-            elapsed += Time.deltaTime;
+            orbitRadius = Mathf.Lerp(startingPos, lowerLimit, chargeDownCurve.Evaluate(elapsed / chargeTime));
+            elapsed = Mathf.Clamp(elapsed + Time.deltaTime, 0, chargeTime);
+            yield return new WaitForEndOfFrame();
         }
-        //Go up
+        //-------------
+        yield return new WaitForSeconds(.1f);
+        //ToDo: Screenshake?
+        //-- Go up --
+        while (elapsed > 0)
+        {
+            orbitRadius = Mathf.Lerp(startingPos, lowerLimit, chargeUpCurve.Evaluate(elapsed / recoveryTime));
+            elapsed = Mathf.Clamp(elapsed - Time.deltaTime, 0, recoveryTime);
+            yield return new WaitForEndOfFrame();
+        }
+        //-------------
         isAttacking = false;
         isChargingAttack = false;
         currentCharge = 0f;
-        yield return null;
+        yield return new WaitForEndOfFrame();
     }
 
 }
