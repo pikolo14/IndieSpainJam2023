@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static LevelGlobals;
+
 
 public abstract class EnemyBase : MonoBehaviour
 {
@@ -12,6 +15,26 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected bool _moving = false;
 
+
+    #region COUNT
+
+    protected void OnEnable() 
+    {
+        System.Type derivedType = GetType();
+        if (!EnemiesCounts.ContainsKey(derivedType))
+            EnemiesCounts[derivedType] = 0;
+        EnemiesCounts[derivedType]++;
+        //Debug.Log(derivedType.ToString()+" spawned: "+ EnemiesCounts[derivedType]);
+    }
+
+    protected void OnDestroy()
+    {
+        System.Type derivedType = GetType();
+        EnemiesCounts[derivedType]--;
+        //Debug.Log(derivedType.ToString() + " spawned: " + EnemiesCounts[derivedType]);
+    }
+
+    #endregion
 
     public virtual void Initialize(float angle, float orbitalRadius = -1)
     {
@@ -33,8 +56,8 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected virtual void Locate()
     {
-        float newX = LevelGlobals.PlanetTransform.position.x + _orbitRadius * Mathf.Cos(_currentAngle);
-        float newY = LevelGlobals.PlanetTransform.position.y + _orbitRadius * Mathf.Sin(_currentAngle);
+        float newX = PlanetTransform.position.x + _orbitRadius * Mathf.Cos(_currentAngle);
+        float newY = PlanetTransform.position.y + _orbitRadius * Mathf.Sin(_currentAngle);
         transform.position = new Vector2(newX, newY);
     }
 

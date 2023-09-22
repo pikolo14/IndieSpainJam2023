@@ -26,4 +26,9 @@ public struct EnemySpawnProperties
     public int MaxUnits;
     [NonSerialized]
     public float ElapsedTime;
+    [NonSerialized]
+    public float RandomTimeVariation;
+    private const float _minSpawnDelay = 0.5f;
+
+    public float RealDelay { get => Mathf.Max(SpawnDelay + RandomTimeVariation, _minSpawnDelay); }
 }

@@ -8,9 +8,12 @@ public class EnemiesSpawnManager : MonoBehaviour
 
     public bool Spawning = true;
     public float SpawnAngleRange = 90;
+    public float SpawnDelayRandomVariation = 1;
+    
 
     [Header("Difficulty")]
     private int _currentDifficulty = -1;
+
     [SerializeField]
     public List<SpawnProperties> SpawnPropertiesPerDifficulty;
     public SpawnProperties CurrentSpawnProperties = null;
@@ -25,10 +28,10 @@ public class EnemiesSpawnManager : MonoBehaviour
     {
         if(Spawning)
         {
-            UpdateEnemySpawning(HumanPrefab, ref CurrentSpawnProperties.Human, LevelGlobals.HumansCount);
-            UpdateEnemySpawning(RocketPrefab, ref CurrentSpawnProperties.Rocket, LevelGlobals.RocketsCount);
-            UpdateEnemySpawning(TankPrefab, ref CurrentSpawnProperties.Tank, LevelGlobals.TanksCount);
-            UpdateEnemySpawning(SatellitePrefab, ref CurrentSpawnProperties.Satellite, LevelGlobals.SatellitesCount);
+            UpdateEnemySpawning(HumanPrefab, ref CurrentSpawnProperties.Human, LevelGlobals.EnemiesCounts[typeof(WalkingEnemy)]);
+            UpdateEnemySpawning(RocketPrefab, ref CurrentSpawnProperties.Rocket, LevelGlobals.EnemiesCounts[typeof(VerticalEnemy)]);
+            UpdateEnemySpawning(TankPrefab, ref CurrentSpawnProperties.Tank, LevelGlobals.EnemiesCounts[typeof(ShooterEnemy)]);
+            UpdateEnemySpawning(SatellitePrefab, ref CurrentSpawnProperties.Satellite, LevelGlobals.EnemiesCounts[typeof(OrbitalEnemy)]);
         }
     }
 
@@ -37,10 +40,11 @@ public class EnemiesSpawnManager : MonoBehaviour
         //Comprobar que no se ha alcanzado limite de unidades
         if(count < properties.MaxUnits)
         {
-            if (properties.ElapsedTime > properties.SpawnDelay)
+            if (properties.ElapsedTime > properties.RealDelay)
             {
                 properties.ElapsedTime = 0;
                 SpawnEnemy(prefab);
+                properties.RandomTimeVariation = Random.Range(-SpawnDelayRandomVariation / 2f, SpawnDelayRandomVariation / 2f);
             }
             else
                 properties.ElapsedTime += Time.deltaTime;

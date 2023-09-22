@@ -7,7 +7,7 @@ public class VerticalEnemy : EnemyBase
     public float LaunchDelay = 3;
     public float TimeToLiveLaunched = 5;
     protected float _height;
-
+    
 
     public override void Initialize(float angle, float orbitalRadius = -1)
     {

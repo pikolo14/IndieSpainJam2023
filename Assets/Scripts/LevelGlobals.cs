@@ -12,10 +12,13 @@ public class LevelGlobals : Singleton<LevelGlobals>
     public static float PlanetRadius;
 
     [Header("EnemyCount")]
-    public static int HumansCount = 0;
-    public static int RocketsCount = 0;
-    public static int TanksCount = 0;
-    public static int SatellitesCount = 0;
+    public static Dictionary<Type, int> EnemiesCounts = new Dictionary<Type, int>()
+    {
+        { typeof(WalkingEnemy),0},
+        { typeof(VerticalEnemy),0},
+        { typeof(ShooterEnemy),0},
+        { typeof(OrbitalEnemy),0}
+    };
 
 
     private new void Awake()
