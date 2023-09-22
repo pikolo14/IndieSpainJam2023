@@ -12,7 +12,7 @@ public class WalkingEnemy : OrbitalEnemy
     {
         _moving = true;
         _currentAngle = angle;
-        _height = GetComponent<Collider2D>().bounds.size.y;
+        _height = GetComponentInChildren<Collider2D>().bounds.size.y;
         _orbitRadius = LevelGlobals.PlanetRadius + _height/2f;
 
         SetRandomDirection();

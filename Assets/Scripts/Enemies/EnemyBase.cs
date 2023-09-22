@@ -63,7 +63,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected virtual void Orientate()
     {
-        Vector3 up = transform.position - LevelGlobals.PlanetTransform.position;
+        Vector3 up = transform.position - PlanetTransform.position;
         float angle = Mathf.Atan2(up.y, up.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle + RotationOffset);
     }

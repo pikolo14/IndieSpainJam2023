@@ -389,9 +389,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HumanPrefab: {fileID: 2540599309485035188, guid: d98fcca27a6d71546a89248ed9c84140, type: 3}
   RocketPrefab: {fileID: 3245040213486577971, guid: 86b0c00e07b509f4f818a6f4a07ca9e1, type: 3}
-  TankPrefab: {fileID: 0}
-  SatellitePrefab: {fileID: 0}
-  BulletPrefab: {fileID: 0}
+  TankPrefab: {fileID: 1501572339024185419, guid: ed439b191399ea946ac7e632048fefb3, type: 3}
+  SatellitePrefab: {fileID: 6615137482838394442, guid: 6d7883a8d4c956143a2ad31641d3cd38, type: 3}
+  BulletPrefab: {fileID: 1142040468445331475, guid: d59d0ee7943bebe448dbd2f07ceacd4f, type: 3}
   CityPrefab: {fileID: 0}
   Spawning: 1
   SpawnAngleRange: 90
@@ -399,16 +399,16 @@ MonoBehaviour:
   SpawnPropertiesPerDifficulty:
   - Human:
       SpawnDelay: 1
-      MaxUnits: 10
+      MaxUnits: 5
     Rocket:
       SpawnDelay: 2
       MaxUnits: 5
     Tank:
-      SpawnDelay: 0
-      MaxUnits: 0
+      SpawnDelay: 2
+      MaxUnits: 5
     Satellite:
-      SpawnDelay: 0
-      MaxUnits: 0
+      SpawnDelay: 2
+      MaxUnits: 5
   CurrentSpawnProperties:
     Human:
       SpawnDelay: 0
@@ -495,7 +495,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: c0f69b3b95fecb94abd196c20828996e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -520,7 +520,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1133414247
 CircleCollider2D:
@@ -877,7 +877,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &2056208391
 CircleCollider2D:
