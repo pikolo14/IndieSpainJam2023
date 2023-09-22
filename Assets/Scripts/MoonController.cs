@@ -48,6 +48,7 @@ public class MoonController : MonoBehaviour
     {
         Attack();
         Movement();
+        Rotation();
     }
 
     private void Attack()
@@ -83,6 +84,10 @@ public class MoonController : MonoBehaviour
     public float GetMoonRadius()
     {
         return col.bounds.extents.y;
+    }
+    private void Rotation()
+    {
+        transform.up = (transform.position - orbitTarget.position).normalized;
     }
 
     private void OnDrawGizmosSelected()
