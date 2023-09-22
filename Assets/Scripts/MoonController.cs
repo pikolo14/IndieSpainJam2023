@@ -47,13 +47,17 @@ public class MoonController : MonoBehaviour
     void Update()
     {
         Attack();
+    }
+
+    void FixedUpdate()
+    {
         Movement();
         Rotation();
     }
 
     private void Attack()
     {
-        if (Input.GetButtonDown("Jump") && !isChargingAttack)
+        if (Input.GetButtonDown("Jump") && !isChargingAttack && !isAttacking)
             isChargingAttack = true;
 
         if (isChargingAttack && Input.GetButton("Jump"))
@@ -62,7 +66,7 @@ public class MoonController : MonoBehaviour
             currentCharge = Mathf.Clamp(currentCharge, 0, maxCharge);
         }
 
-        if (Input.GetButtonUp("Jump"))
+        if (isChargingAttack && Input.GetButtonUp("Jump"))
             StartCoroutine(AttackCoroutine(currentCharge));
     }
 
@@ -71,7 +75,7 @@ public class MoonController : MonoBehaviour
         //if (isAttacking || isChargingAttack) return;
         orbitTarget.position = orbitTarget.position;
 
-        float inputValue = (!isAttacking || !isChargingAttack) ? (Input.GetAxis("Horizontal") * -1f) : 0;
+        float inputValue = !(isAttacking || isChargingAttack) ? (Input.GetAxis("Horizontal") * -1f) : 0f;
 
         currentAngle += inputValue * orbitSpeed * Time.deltaTime; //By using GetAxis we already have acceleration
 
@@ -101,6 +105,7 @@ public class MoonController : MonoBehaviour
 
     public IEnumerator AttackCoroutine(float attackCharge)
     {
+        isChargingAttack = false;
         isAttacking = true;
         float elapsed = 0f;
         float lowerLimit = orbitTarget.GetComponent<Collider2D>().bounds.extents.y;
@@ -125,7 +130,6 @@ public class MoonController : MonoBehaviour
         }
         //-------------
         isAttacking = false;
-        isChargingAttack = false;
         currentCharge = 0f;
         yield return new WaitForEndOfFrame();
     }
