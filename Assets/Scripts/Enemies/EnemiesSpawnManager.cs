@@ -56,7 +56,7 @@ public class EnemiesSpawnManager : MonoBehaviour
         float spawnAngle = LevelGlobals.Moon.currentAngle;
         spawnAngle += Random.Range(-SpawnAngleRange * Mathf.Deg2Rad / 2f, SpawnAngleRange * Mathf.Deg2Rad / 2f);
 
-        var go = Instantiate(prefab, LevelGlobals.PlanetTransform);
+        var go = Instantiate(prefab, LevelGlobals.PlanetTransform, true);
         go.GetComponent<EnemyBase>().Initialize(spawnAngle);
     }
 

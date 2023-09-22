@@ -30,4 +30,35 @@ public class LevelGlobals : Singleton<LevelGlobals>
         PlanetRadius = PlanetTransform.GetComponent<CircleCollider2D>().bounds.extents.x;
         MoonOrbitRadius = Moon.orbitRadius;
     }
+
+    public static Vector3 GetPolarPosition(float angleRadians, float radius, Transform center = null)
+    {
+        if (center == null)
+            center = PlanetTransform;
+
+        // Calculate the Cartesian coordinates
+        float x = radius * Mathf.Cos(angleRadians);
+        float y = radius * Mathf.Sin(angleRadians);
+
+        // Create a Vector3 with the calculated coordinates and add it to the center's position
+        Vector3 position = center.position + new Vector3(x, y, 0f);
+
+        return position;
+    }
+
+    public static float GetPolarAngleFromPosition(Vector3 worldPosition, Transform polarCenter, out float radius)
+    {
+        float angleDegrees = 0;
+
+        // Calculate the vector from the center to the world position
+        Vector3 offset = worldPosition - polarCenter.position;
+
+        // Calculate the radius (magnitude of the offset)
+        radius = offset.magnitude;
+
+        // Calculate the angle (in degrees) using the Atan2 function
+        float angleRadians = Mathf.Atan2(offset.y, offset.x);
+        angleDegrees = angleRadians * Mathf.Rad2Deg;
+        return angleDegrees;
+    }
 }
