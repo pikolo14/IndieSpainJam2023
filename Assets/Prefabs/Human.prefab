@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2961196277238606977
 SpriteRenderer:
@@ -101,6 +101,8 @@ MonoBehaviour:
   Deffense: 0
   Speed: 0.05
   RotationOffset: -90
+  spawnParticleSystem: {fileID: 0}
+  deathParticleSystem: {fileID: 5508112412151308702, guid: 63a1387f911d0404c8fccf12878bc70b, type: 3}
 --- !u!61 &-2679919257459269896
 BoxCollider2D:
   m_ObjectHideFlags: 0

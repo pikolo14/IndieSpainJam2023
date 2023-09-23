@@ -1594,6 +1594,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1647815645}
+  - component: {fileID: 1647815646}
   - component: {fileID: 1647815644}
   m_Layer: 0
   m_Name: -- Managers --
@@ -1631,6 +1632,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1647815646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647815643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baaf86e809155354398c7fbd472ee95e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGameRunning: 0
+  isGamePaused: 0
+  isGameEnding: 0
+  matchTime: 300
+  elapsedMatchTime: 0
 --- !u!1 &1705456835
 GameObject:
   m_ObjectHideFlags: 0
@@ -1900,38 +1918,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017010871}
   m_CullTransparentMesh: 1
---- !u!1 &2056208387 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 160599887977904563, guid: 472bd9634d28d33458ec46d1dfa16b49, type: 3}
-  m_PrefabInstance: {fileID: 5013071300301808894}
-  m_PrefabAsset: {fileID: 0}
---- !u!50 &2056208392
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2056208387}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1001 &4920813266115481142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2005,10 +1991,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Moon
       objectReference: {fileID: 0}
-    - target: {fileID: 1430754746188817422, guid: 472bd9634d28d33458ec46d1dfa16b49, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7033188009031352109, guid: 472bd9634d28d33458ec46d1dfa16b49, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2057,17 +2039,10 @@ PrefabInstance:
       propertyPath: orbitTarget
       value: 
       objectReference: {fileID: 1133414246}
-    - target: {fileID: 7266448626294785794, guid: 472bd9634d28d33458ec46d1dfa16b49, type: 3}
-      propertyPath: moonHitParticleSystem
-      value: 
-      objectReference: {fileID: 1228914433805845602, guid: a9e74aa6d35393d4fb58ae3e997fc1d4, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 160599887977904563, guid: 472bd9634d28d33458ec46d1dfa16b49, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2056208392}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 472bd9634d28d33458ec46d1dfa16b49, type: 3}
 --- !u!1001 &6568043958529016355
 PrefabInstance:

@@ -10,6 +10,9 @@ public abstract class EnemyBase : MonoBehaviour
     public int Deffense = 0;
     public float Speed = 1;
     public float RotationOffset = 90;
+
+    public GameObject spawnParticleSystem, deathParticleSystem;
+
     protected float _orbitRadius;
     protected float _currentAngle = 0;
 
@@ -18,7 +21,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     #region COUNT
 
-    protected void OnEnable() 
+    protected void OnEnable()
     {
         System.Type derivedType = GetType();
         if (!EnemiesCounts.ContainsKey(derivedType))
@@ -68,9 +71,9 @@ public abstract class EnemyBase : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle + RotationOffset);
     }
 
-    protected virtual bool TryKill(int chargeDamage)
+    public virtual bool TryKill(int chargeDamage)
     {
-        if(chargeDamage >= Deffense)
+        if (chargeDamage >= Deffense)
         {
             Die();
             return true;
@@ -81,7 +84,9 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected virtual void Die()
     {
-        Destroy(this);
+        if (deathParticleSystem != null)
+            Instantiate(deathParticleSystem, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     //TODO: Actualizar contadores de cada tipo de enemigo en awake y destroy

@@ -141,7 +141,12 @@ public class MoonController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Instantiate(moonHitParticleSystem, collision.ClosestPoint(transform.position), Quaternion.identity);
+        if (isAttacking)
+        {
+            if (collision.TryGetComponent<EnemyBase>(out EnemyBase enemy))
+                enemy.TryKill(Mathf.FloorToInt(currentCharge));
+        }
+        //Instantiate(moonHitParticleSystem, collision.ClosestPoint(transform.position), Quaternion.identity);
     }
 
 }
