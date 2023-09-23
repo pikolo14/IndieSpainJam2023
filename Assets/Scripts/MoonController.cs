@@ -13,8 +13,12 @@ public class MoonController : MonoBehaviour
     public float maxCharge = 3f;
     public float chargeRate = 1f;
     public float chargeTime = .25f;
+    public float downTime = .25f;
     public float recoveryTime = .5f;
     public AnimationCurve chargeDownCurve, chargeUpCurve;
+
+    [Header("References")]
+    public GameObject moonHitParticleSystem;
 
     [HideInInspector]
     public float startingOrbitRadius = 1f;
@@ -109,7 +113,7 @@ public class MoonController : MonoBehaviour
         isAttacking = true;
         float elapsed = 0f;
         float lowerLimit = orbitTarget.GetComponent<Collider2D>().bounds.extents.y;
-        Debug.Log("lowerLimit: " + lowerLimit);
+
         float startingPos = orbitRadius;
         //-- Go down --
         while (elapsed < chargeTime)
@@ -119,7 +123,8 @@ public class MoonController : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         //-------------
-        yield return new WaitForSeconds(.1f);
+        //ToDo: Spawn ground hit particles
+        yield return new WaitForSeconds(downTime);
         //ToDo: Screenshake?
         //-- Go up --
         while (elapsed > 0)
@@ -133,4 +138,10 @@ public class MoonController : MonoBehaviour
         currentCharge = 0f;
         yield return new WaitForEndOfFrame();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Instantiate(moonHitParticleSystem, collision.ClosestPoint(transform.position), Quaternion.identity);
+    }
+
 }
