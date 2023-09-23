@@ -14,7 +14,7 @@ public class BulletEnemy : EnemyBase
 
     protected override void Move()
     {
-        transform.position += transform.up * Speed;
+        transform.position += transform.up * Speed * Time.deltaTime;
     }
     protected IEnumerator TimeToLiveCoroutine()
     {

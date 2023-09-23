@@ -26,10 +26,15 @@ public class OrbitalEnemy : EnemyBase
     }
 
     //Direccion inicial aleatoria (con flip de sprite)
-    protected void SetRandomDirection()
+    protected virtual void SetRandomDirection()
     {
         int rand = Random.Range(0, 2);
-        _direction = (rand == 0) ? 1:-1;
+        SetDirection((rand == 0) ? 1 : -1);
+    }
+
+    protected virtual void SetDirection(int direction)
+    {
+        _direction = direction==1 ? 1:-1;
 
         //Hacer flip con escala
         Vector3 newScale = transform.localScale;

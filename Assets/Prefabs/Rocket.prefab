@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Deffense: 1
-  Speed: 0.1
+  Speed: 10
   RotationOffset: -90
   LaunchDelay: 3
   TimeToLiveLaunched: 5

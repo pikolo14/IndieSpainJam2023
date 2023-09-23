@@ -817,6 +817,7 @@ MonoBehaviour:
   maxCharge: 3
   chargeRate: 1
   chargeTime: 0.25
+  downTime: 0.25
   recoveryTime: 0.5
   chargeDownCurve:
     serializedVersion: 2
@@ -866,6 +867,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  moonHitParticleSystem: {fileID: 0}
   startingOrbitRadius: 1
   currentAngle: 0
   isAttacking: 0

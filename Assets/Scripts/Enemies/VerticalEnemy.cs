@@ -24,7 +24,7 @@ public class VerticalEnemy : EnemyBase
     protected override void Move()
     {
         Vector3 direction = transform.position - LevelGlobals.PlanetTransform.position;
-        transform.position += direction.normalized * Speed;
+        transform.position += direction.normalized * Speed * Time.deltaTime;
     }
 
     protected IEnumerator WaitForLaunch()

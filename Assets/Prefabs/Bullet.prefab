@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Deffense: 0
-  Speed: 0.1
+  Speed: 10
   RotationOffset: 0
   TimeToLive: 5
 --- !u!1 &7871312901128978937
