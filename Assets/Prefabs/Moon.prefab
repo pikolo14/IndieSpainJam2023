@@ -163,6 +163,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   chargeBar: {fileID: 7514176555376313103}
   moonHitParticleSystem: {fileID: 1228914433805845602, guid: a9e74aa6d35393d4fb58ae3e997fc1d4, type: 3}
+  floorHitParticleSystem: {fileID: 1228914433805845602, guid: 6a1df86c624eb4d458c29cfa56369564, type: 3}
   startingOrbitRadius: 1
   currentAngle: 0
   isAttacking: 0
@@ -186,6 +187,9 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  InvulnerabilityTime: 2
+  _invulnerable: 0
+  MoonDeathParticleSystem: {fileID: 0}
 --- !u!58 &1430754746188817422
 CircleCollider2D:
   m_ObjectHideFlags: 0

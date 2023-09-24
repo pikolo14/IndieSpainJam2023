@@ -6,7 +6,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
-    public GameObject pauseMenu, gameUI, gameOverPanel;
+    public GameObject pauseMenu, gameUI, gameOverPanel, tutorialPanel;
     public CanvasGroup fader;
     public Image healthBar;
 
@@ -20,6 +20,12 @@ public class UIManager : MonoBehaviour
     public void TogglePauseMenu(bool on)
     {
         pauseMenu.SetActive(on);
+        ToggleTutorial(false);
+    }
+
+    public void ToggleTutorial(bool on)
+    {
+        tutorialPanel.SetActive(on);
     }
 
     public void ToggleGameUI(bool on)

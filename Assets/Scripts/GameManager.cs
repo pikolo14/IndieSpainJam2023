@@ -93,4 +93,10 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.instance.RestartScene();
     }
+
+    public void ExitGame()
+    {
+        Debug.Log("Quitting application...");
+        Application.Quit();
+    }
 }

@@ -167,7 +167,7 @@ public class MoonController : MonoBehaviour
         isAttacking = false;
         Camera.main.DOShakePosition(0.5f, 0.5f, 30);
         if (floorHitParticleSystem != null)
-            Instantiate(floorHitParticleSystem, transform.position, Quaternion.identity);
+            Instantiate(floorHitParticleSystem, transform.position - Vector3.up * col.bounds.extents.y, Quaternion.identity);
         yield return new WaitForSeconds(downTime);
         //-- Go up --
         while (elapsed > 0)
