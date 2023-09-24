@@ -911,14 +911,14 @@ MonoBehaviour:
       SpawnDelay: 5
       MaxUnits: 5
     Rocket:
-      SpawnDelay: 3
-      MaxUnits: 20
+      SpawnDelay: 2
+      MaxUnits: 25
     Tank:
-      SpawnDelay: 5
-      MaxUnits: 3
+      SpawnDelay: 2
+      MaxUnits: 4
     Satellite:
-      SpawnDelay: 5
-      MaxUnits: 2
+      SpawnDelay: 2
+      MaxUnits: 3
     NextDeadHumanGoal: 80
   CurrentSpawnProperties:
     Human:
