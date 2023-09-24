@@ -41,8 +41,13 @@ public class MoonHealth : MonoBehaviour
 
     private IEnumerator InvulnerableCoroutine()
     {
+        var anim = GetComponent<Animator>();
         _invulnerable = true;
+        anim.SetBool("Invulnerable", true);
+
         yield return new WaitForSeconds(InvulnerabilityTime);
+
+        anim.SetBool("Invulnerable", false);
         _invulnerable = false;
     }
 }
