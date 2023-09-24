@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     public float matchTime = 300f;
     public float elapsedMatchTime = 0f;
     public int score;
+
 
     private void Awake()
     {
@@ -34,6 +36,21 @@ public class GameManager : MonoBehaviour
         //if (elapsedMatchTime >= matchTime)
         //    StartCoroutine(EndGame(1f));
     }
+
+    [Button]
+    public void StartGame()
+    {
+        Moon.isActive = true;
+        EnemiesSpawnManager.Instance.StartSpawn();
+        UIManager.instance.ToggleGameUI(true);
+    }
+
+    [Button]
+    public void EndGame()
+    {
+        StartCoroutine(EndGame(2));
+    }
+
     public IEnumerator EndGame(float transitionDuration)
     {
         isGameEnding = true;
@@ -47,6 +64,7 @@ public class GameManager : MonoBehaviour
             UIManager.instance.SetFaderOpacity(alpha);
             yield return null;
         }
+        UIManager.instance.ToggleGameUI(false);
         UIManager.instance.SetFaderOpacity(1f);
         Time.timeScale = 1f;
         SceneManager.instance.LoadScene("02_Credits");

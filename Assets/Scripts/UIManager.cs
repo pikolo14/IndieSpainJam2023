@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
     public void ToggleGameUI(bool on)
     {
         gameUI.SetActive(on);
+        gameUI.GetComponent<Animator>().SetBool("Show", on);
     }
 
     public void SetFaderOpacity(float opacity01)

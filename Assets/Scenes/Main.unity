@@ -791,7 +791,6 @@ MonoBehaviour:
   SatellitePrefab: {fileID: 6615137482838394442, guid: 6d7883a8d4c956143a2ad31641d3cd38, type: 3}
   BulletPrefab: {fileID: 1142040468445331475, guid: d59d0ee7943bebe448dbd2f07ceacd4f, type: 3}
   CityPrefab: {fileID: 5908375932313044583, guid: e50a19f626a467449b6e43c419566257, type: 3}
-  Spawning: 1
   SpawnAngleRange: 90
   SpawnDelayRandomVariation: 1
   CitiesNumber: 4
@@ -1218,6 +1217,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2071045293}
+  - component: {fileID: 2071045294}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -1247,6 +1247,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &2071045294
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071045292}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bba9bb01dd1049e4695a3c736a1a1b41, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &4755010746079480011
 PrefabInstance:
   m_ObjectHideFlags: 0

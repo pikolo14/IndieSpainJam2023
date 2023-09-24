@@ -11,7 +11,7 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
 {    
     public GameObject HumanPrefab, RocketPrefab, TankPrefab, SatellitePrefab, BulletPrefab, CityPrefab;
 
-    public bool Spawning = true;
+    private bool _spawning = false;
     public float SpawnAngleRange = 45;
     public float SpawnDelayRandomVariation = 1;
     
@@ -27,15 +27,9 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
     public SpawnProperties CurrentSpawnProperties = null;
 
 
-    public void Start()
-    {
-        SetDifficulty(0);
-        InitializeCities();
-    }
-
     public void Update()
     {
-        if(Spawning)
+        if(_spawning)
         {
             UpdateEnemySpawning(HumanPrefab, ref CurrentSpawnProperties.Human, EnemiesCounts[typeof(WalkingEnemy)]);
             UpdateEnemySpawning(RocketPrefab, ref CurrentSpawnProperties.Rocket, EnemiesCounts[typeof(VerticalEnemy)]);
@@ -46,6 +40,13 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
 
 
     #region SPAWN
+
+    public void StartSpawn()
+    {
+        SetDifficulty(0);
+        InitializeCities();
+        _spawning = true;
+    }
 
     public void InitializeCities()
     {
