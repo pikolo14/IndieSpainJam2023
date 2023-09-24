@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class VerticalEnemy : EnemyBase
     public float TimeToLiveLaunched = 5;
     protected GameObject _fire;
     protected float _height;
+    protected Tweener _shakeTween;
 
 
     public override void Initialize(float angle, float orbitalRadius = -1)
@@ -32,7 +34,12 @@ public class VerticalEnemy : EnemyBase
 
     protected IEnumerator WaitForLaunch()
     {
+        //Vibracion durante lanzamiento
+        _shakeTween = transform.DOShakePosition(LaunchDelay-0.6f,0.05f,30,0,false,false).SetEase(Ease.InQuad);
+        DOVirtual.Float(0.1f, 1, LaunchDelay, (value) => _shakeTween.timeScale = value).SetEase(Ease.InQuad);
+
         yield return new WaitForSeconds(LaunchDelay);
+
         _moving = true;
         _fire.SetActive(true);
         StartCoroutine(TimeToLiveCorotine());
