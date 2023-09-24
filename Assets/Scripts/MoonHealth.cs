@@ -42,6 +42,8 @@ public class MoonHealth : MonoBehaviour
         if (MoonDeathParticleSystem != null)
             Instantiate(MoonDeathParticleSystem, transform.position, Quaternion.identity);
         GetComponent<Collider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponentInChildren<ParticleSystemForceField>().enabled = false;
         GameManager.instance.EndGame();
     }
 
