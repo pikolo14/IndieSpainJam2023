@@ -24,7 +24,7 @@ public class MoonController : MonoBehaviour
     public GameObject chargeBar;
 
     [Header("References")]
-    public GameObject moonHitParticleSystem;
+    public GameObject moonHitParticleSystem, floorHitParticleSystem;
 
     [HideInInspector]
     public float startingOrbitRadius = 1f;
@@ -164,9 +164,10 @@ public class MoonController : MonoBehaviour
         }
         //-------------
         isAttacking = false;
-        //ToDo: Spawn ground hit particles
-        yield return new WaitForSeconds(downTime);
         //ToDo: Screenshake?
+        if (floorHitParticleSystem != null)
+            Instantiate(floorHitParticleSystem, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(downTime);
         //-- Go up --
         while (elapsed > 0)
         {
