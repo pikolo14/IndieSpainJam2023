@@ -12,6 +12,9 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI txtScore;
 
+    public GameObject TitleCanvas;
+    public GameObject FirstTitle, RealTitle;
+
     private void Awake()
     {
         instance = this;
@@ -39,6 +42,24 @@ public class UIManager : MonoBehaviour
         fader.alpha = opacity01;
     }
 
+    public void ToggleTitle(bool on)
+    {
+        TitleCanvas.SetActive(on);
+        if(on)
+        {
+            if(PlayerPrefs.HasKey("AlreadyPlayed"))
+            {
+                RealTitle.SetActive(true);
+                FirstTitle.SetActive(false);
+            }
+            else
+            {
+                RealTitle.SetActive(false);
+                FirstTitle.SetActive(true);
+            }
+        }
+    }
+
     public void UpdateHealthPercentage(float remainingHPPorcentage)
     {
         healthBar.fillAmount = remainingHPPorcentage;
@@ -53,4 +74,5 @@ public class UIManager : MonoBehaviour
     {
         gameOverPanel.SetActive(on);
     }
+
 }

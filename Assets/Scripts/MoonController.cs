@@ -6,7 +6,7 @@ using UnityEngine;
 public class MoonController : MonoBehaviour
 {
     [Header("Options")]
-    public bool isActive = false;
+    public bool canMoveHorizontal = false;
 
     [Header("Orbit")]
     public Transform orbitTarget;
@@ -71,7 +71,6 @@ public class MoonController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isActive) return;
         Movement();
         Rotation();
     }
@@ -114,7 +113,7 @@ public class MoonController : MonoBehaviour
 
         //float inputValue = !isAttacking ? (!isChargingAttack ? (Input.GetAxis("Horizontal") * -1f) : (Input.GetAxis("Horizontal") * (-1f * speedDuringCharge))) : 0f; //Biba la lejivilidad del kodygo
         float inputValue = 0f;
-        if (!isAttacking)
+        if (!isAttacking && canMoveHorizontal)
             if (!isChargingAttack)
                 inputValue = Input.GetAxis("Horizontal") * -1f;
             else

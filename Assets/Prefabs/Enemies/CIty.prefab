@@ -320,7 +320,7 @@ MonoBehaviour:
   RotationOffset: -90
   score: 200
   spawnParticleSystem: {fileID: 0}
-  deathParticleSystem: {fileID: 0}
+  deathParticleSystem: {fileID: 2715905710324695011, guid: 9b09199265d374743b6c5853238886ca, type: 3}
   Sprites:
   - {fileID: 21300000, guid: 46c05629298974d4a96b0b2c8b271e4c, type: 3}
   - {fileID: 21300000, guid: d02fd6db6085410468bc6d15087be406, type: 3}

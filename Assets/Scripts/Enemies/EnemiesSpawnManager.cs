@@ -150,7 +150,7 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
 
     public void DestroyCity(CityEnemy city)
     {
-        Camera.main.DOShakePosition(1,1, 30);
+        Camera.main.DOShakePosition(1.5f, 1, 30);
         _cities.Remove(city);
         GameManager.instance.AddScore(city.score);
         IncreaseDifficulty();
