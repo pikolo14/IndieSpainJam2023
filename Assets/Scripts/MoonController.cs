@@ -18,6 +18,8 @@ public class MoonController : MonoBehaviour
     public float chargeTime = .25f;
     public float downTime = .25f;
     public float recoveryTime = .5f;
+    [Range(0f, 1f)]
+    public float speedDuringCharge = .5f;
     public AnimationCurve chargeDownCurve, chargeUpCurve;
 
     [Header("References")]
@@ -58,7 +60,7 @@ public class MoonController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //if (!isActive) return;
+        if (!isActive) return;
         Movement();
         Rotation();
     }
@@ -80,7 +82,15 @@ public class MoonController : MonoBehaviour
 
     private void Movement()
     {
-        float inputValue = !(isAttacking || isChargingAttack) ? (Input.GetAxis("Horizontal") * -1f) : 0f;
+        //float inputValue = !(isAttacking || isChargingAttack) ? (Input.GetAxis("Horizontal") * -1f) : 0);
+
+        //float inputValue = !isAttacking ? (!isChargingAttack ? (Input.GetAxis("Horizontal") * -1f) : (Input.GetAxis("Horizontal") * (-1f * speedDuringCharge))) : 0f; //Biba la lejivilidad del kodygo
+        float inputValue = 0f;
+        if (!isAttacking)
+            if (!isChargingAttack)
+                inputValue = Input.GetAxis("Horizontal") * -1f;
+            else
+                inputValue = Input.GetAxis("Horizontal") * (-1f * speedDuringCharge);
 
         currentAngle += inputValue * orbitSpeed * Time.deltaTime; //By using GetAxis we already have acceleration
 
@@ -128,6 +138,7 @@ public class MoonController : MonoBehaviour
         //ToDo: Spawn ground hit particles
         yield return new WaitForSeconds(downTime);
         //ToDo: Screenshake?
+        isAttacking = false;
         //-- Go up --
         while (elapsed > 0)
         {
@@ -136,7 +147,6 @@ public class MoonController : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         //-------------
-        isAttacking = false;
         currentCharge = 0f;
         yield return new WaitForEndOfFrame();
     }
