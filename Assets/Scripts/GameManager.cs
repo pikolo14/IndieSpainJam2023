@@ -24,8 +24,9 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1f;
-        isGameRunning = true;
         isGameEnding = false;
+        isGameRunning = false;
+        isGamePaused = false;
     }
 
     private void Update()
@@ -40,6 +41,9 @@ public class GameManager : MonoBehaviour
     [Button]
     public void StartGame()
     {
+        Time.timeScale = 1f;
+        isGameRunning = true;
+        isGameEnding = false;
         Moon.isActive = true;
         EnemiesSpawnManager.Instance.StartSpawn();
         UIManager.instance.ToggleGameUI(true);
