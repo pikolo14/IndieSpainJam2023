@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator EndGame(float transitionDuration)
     {
+        yield return new WaitForSecondsRealtime(2.5f);
         isGameEnding = true;
         Time.timeScale = 0f;
         float elapsedTime = 0f;

@@ -41,7 +41,8 @@ public class MoonHealth : MonoBehaviour
         OnDeath?.Invoke();
         if (MoonDeathParticleSystem != null)
             Instantiate(MoonDeathParticleSystem, transform.position, Quaternion.identity);
-        Invoke(nameof(GameManager.instance.EndGame), 2.5f);
+        GetComponent<Collider2D>().enabled = false;
+        GameManager.instance.EndGame();
     }
 
     private IEnumerator InvulnerableCoroutine()
