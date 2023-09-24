@@ -10,6 +10,7 @@ public class VerticalEnemy : EnemyBase
     protected GameObject _fire;
     protected float _height;
     protected Tweener _shakeTween;
+    public GameObject SmokeParticles;
 
 
     public override void Initialize(float angle, float orbitalRadius = -1)
@@ -24,6 +25,10 @@ public class VerticalEnemy : EnemyBase
         Orientate();
 
         StartCoroutine(WaitForLaunch());
+
+        var parts = Instantiate(SmokeParticles, null);
+        parts.transform.position = transform.position - transform.up * _height / 2f;
+        parts.transform.rotation = transform.rotation;
     }
 
     protected override void Move()

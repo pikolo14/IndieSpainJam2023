@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -164,7 +165,7 @@ public class MoonController : MonoBehaviour
         }
         //-------------
         isAttacking = false;
-        //ToDo: Screenshake?
+        Camera.main.DOShakePosition(0.5f, 0.5f, 30);
         if (floorHitParticleSystem != null)
             Instantiate(floorHitParticleSystem, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(downTime);

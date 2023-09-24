@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,6 +10,7 @@ public class MoonHealth : MonoBehaviour
     public UnityEvent OnDeath;
     public float InvulnerabilityTime = 2f;
     public bool _invulnerable = false;
+    public GameObject MoonDeathParticleSystem;
 
 
     private void Awake()
@@ -37,12 +39,16 @@ public class MoonHealth : MonoBehaviour
     private void Death()
     {
         OnDeath?.Invoke();
-        Invoke(nameof(GameManager.instance.EndGame), 5f);
+        if (MoonDeathParticleSystem != null)
+            Instantiate(MoonDeathParticleSystem, transform.position, Quaternion.identity);
+        Invoke(nameof(GameManager.instance.EndGame), 2.5f);
     }
 
     private IEnumerator InvulnerableCoroutine()
     {
-        var anim = GetComponent<Animator>();
+        transform.GetChild(0).DOShakePosition(1.2f, 1.5f, 50);
+
+        var anim = GetComponentInChildren<Animator>();
         _invulnerable = true;
         anim.SetBool("Invulnerable", true);
 

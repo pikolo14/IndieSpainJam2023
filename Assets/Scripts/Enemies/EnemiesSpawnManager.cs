@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor.GettingStarted;
 using System.Collections;
@@ -149,6 +150,7 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
 
     public void DestroyCity(CityEnemy city)
     {
+        Camera.main.DOShakePosition(1,1, 30);
         _cities.Remove(city);
         GameManager.instance.AddScore(city.score);
         IncreaseDifficulty();

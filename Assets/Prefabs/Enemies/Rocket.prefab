@@ -252,6 +252,7 @@ MonoBehaviour:
   deathParticleSystem: {fileID: 2213241952484315808, guid: 5b088fedc3f3cb848950983a690a0fb9, type: 3}
   LaunchDelay: 3
   TimeToLiveLaunched: 5
+  SmokeParticles: {fileID: 8708376353519646179, guid: c27fdec766373774a9f3e5c8f0d3db81, type: 3}
 --- !u!61 &4979692330688690922
 BoxCollider2D:
   m_ObjectHideFlags: 0
