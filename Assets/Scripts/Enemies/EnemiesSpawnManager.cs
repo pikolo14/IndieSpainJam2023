@@ -1,17 +1,20 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemiesSpawnManager : MonoBehaviour
+public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
 {    
     public GameObject HumanPrefab, RocketPrefab, TankPrefab, SatellitePrefab, BulletPrefab, CityPrefab;
 
     public bool Spawning = true;
-    public float SpawnAngleRange = 90;
+    public float SpawnAngleRange = 45;
     public float SpawnDelayRandomVariation = 1;
     
 
     [Header("Difficulty")]
+    public int CitiesNumber = 4;
+    [ShowInInspector][ReadOnly]
     private int _currentDifficulty = -1;
 
     [SerializeField]
@@ -22,6 +25,7 @@ public class EnemiesSpawnManager : MonoBehaviour
     public void Start()
     {
         SetDifficulty(0);
+        InitializeCities();
     }
 
     public void Update()
@@ -51,22 +55,51 @@ public class EnemiesSpawnManager : MonoBehaviour
         }
     }
 
-    public void SpawnEnemy(GameObject prefab)
+    public void SpawnEnemy(GameObject prefab, bool outOfRange = false)
     {
-        float spawnAngle = LevelGlobals.Moon.currentAngle;
-        spawnAngle += Random.Range(-SpawnAngleRange * Mathf.Deg2Rad / 2f, SpawnAngleRange * Mathf.Deg2Rad / 2f);
+        float spawnAngleRads;
+        if (outOfRange)
+        {
+            float from = LevelGlobals.Moon.currentAngle + SpawnAngleRange * Mathf.Deg2Rad / 2f;
+            float to = 2*Mathf.PI + LevelGlobals.Moon.currentAngle - SpawnAngleRange*Mathf.Deg2Rad / 2f;
+            spawnAngleRads = Random.Range(from,to);
+        }
+        else
+            spawnAngleRads = LevelGlobals.Moon.currentAngle + Random.Range(-SpawnAngleRange * Mathf.Deg2Rad / 2f, SpawnAngleRange * Mathf.Deg2Rad / 2f);
 
-        var go = Instantiate(prefab, LevelGlobals.PlanetTransform, true);
-        go.GetComponent<EnemyBase>().Initialize(spawnAngle);
+        SpawnEnemyAtAngle(prefab, spawnAngleRads);
     }
 
-    public void SetDifficulty(int difficulty)
+    public void SpawnEnemyAtAngle(GameObject prefab, float spawnAngleRads)
+    {
+        var go = Instantiate(prefab, LevelGlobals.PlanetTransform, true);
+        go.GetComponent<EnemyBase>().Initialize(spawnAngleRads);
+    }
+
+    public void IncreaseDifficulty()
+    {
+        SetDifficulty(_currentDifficulty + 1);
+    }
+
+    private void SetDifficulty(int difficulty)
     {
         if(difficulty != _currentDifficulty && difficulty < SpawnPropertiesPerDifficulty.Count) 
         {
             _currentDifficulty = difficulty;
             CurrentSpawnProperties = SpawnPropertiesPerDifficulty[difficulty];
             CurrentSpawnProperties.ResetElapsedTimes();
+        }
+    }
+
+    public void InitializeCities()
+    {
+        float from = LevelGlobals.Moon.currentAngle + SpawnAngleRange * Mathf.Deg2Rad / 2f;
+        float to = 2 * Mathf.PI + LevelGlobals.Moon.currentAngle - SpawnAngleRange * Mathf.Deg2Rad / 2f;
+        float increment = (to - from) / CitiesNumber;
+
+        for (float angle = from; angle <= to; angle+=increment)
+        {
+            SpawnEnemyAtAngle(CityPrefab, angle);
         }
     }
 }

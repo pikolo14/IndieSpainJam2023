@@ -35,7 +35,7 @@ public class VerticalEnemy : EnemyBase
     protected IEnumerator WaitForLaunch()
     {
         //Vibracion durante lanzamiento
-        _shakeTween = transform.DOShakePosition(LaunchDelay-0.6f,0.05f,30,0,false,false).SetEase(Ease.InQuad);
+        _shakeTween = transform.DOShakePosition(LaunchDelay-0.6f,0.05f,30,45,false,false).SetEase(Ease.InQuad);
         DOVirtual.Float(0.1f, 1, LaunchDelay, (value) => _shakeTween.timeScale = value).SetEase(Ease.InQuad);
 
         yield return new WaitForSeconds(LaunchDelay);
