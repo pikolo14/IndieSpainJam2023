@@ -6,14 +6,17 @@ public class VerticalEnemy : EnemyBase
 {
     public float LaunchDelay = 3;
     public float TimeToLiveLaunched = 5;
+    protected GameObject _fire;
     protected float _height;
-    
+
 
     public override void Initialize(float angle, float orbitalRadius = -1)
     {
         _currentAngle = angle;
         _height = GetComponent<Collider2D>().bounds.size.y;
         _orbitRadius = LevelGlobals.PlanetRadius + _height/2f;
+        _fire = transform.GetChild(0).gameObject;
+        _fire.SetActive(false);
 
         Locate();
         Orientate();
@@ -31,6 +34,7 @@ public class VerticalEnemy : EnemyBase
     {
         yield return new WaitForSeconds(LaunchDelay);
         _moving = true;
+        _fire.SetActive(true);
         StartCoroutine(TimeToLiveCorotine());
     }
 

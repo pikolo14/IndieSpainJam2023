@@ -16,6 +16,8 @@ public class ShooterEnemy : WalkingEnemy
     public bool right;
     private float angle = 0;
 
+    protected bool _shooting = true;
+
     protected new void Update()
     {
         base.Update();
@@ -52,6 +54,19 @@ public class ShooterEnemy : WalkingEnemy
             Cannon.right = targetDirection.normalized;
         else
             Cannon.right = -targetDirection.normalized;
+
+        //Clampear angulo cañon y evitar disparar fuera de rango
+        Quaternion currentRotation = Cannon.localRotation;
+        float currentZAngle = Mathf.Repeat(currentRotation.eulerAngles.z, 360f);
+        if (currentZAngle > 100 || currentZAngle < 0)
+        {
+            currentZAngle = 0;
+            _shooting = false;
+            _elapsedTime = 0;
+        }
+        else
+            _shooting = true;
+        Cannon.localRotation = Quaternion.Euler(currentRotation.eulerAngles.x, currentRotation.eulerAngles.y, currentZAngle);
     }
 
     protected bool IsMoonOnRight()
