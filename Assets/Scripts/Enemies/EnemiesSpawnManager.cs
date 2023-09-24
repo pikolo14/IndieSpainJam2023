@@ -161,6 +161,8 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
         GameManager.instance.AddScore(city.score);
         Moon.moonHealth.SetFullHealth();
         IncreaseDifficulty();
+        if (_cities.Count <= 0)
+            GameManager.instance.Victory();
     }
 
     public void UpdateDeadHumanCount(int increment)

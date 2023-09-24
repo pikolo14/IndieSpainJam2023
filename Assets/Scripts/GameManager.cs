@@ -103,6 +103,32 @@ public class GameManager : MonoBehaviour
         UIManager.instance.ToggleGameOverPanel(true);
     }
 
+    public void Victory()
+    {
+        StartCoroutine(Victory(2));
+    }
+
+    public IEnumerator Victory(float transitionDuration)
+    {
+        yield return new WaitForSecondsRealtime(2.5f);
+        AudioManager.self.Stop(SoundId.BGM);
+        isGameEnding = true;
+        Time.timeScale = 0f;
+        float elapsedTime = 0f;
+        while (elapsedTime < transitionDuration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsedTime / transitionDuration);
+            float alpha = Mathf.Lerp(0f, 1f, t);
+            UIManager.instance.SetFaderOpacity(alpha);
+            yield return null;
+        }
+        UIManager.instance.ToggleGameUI(false);
+        UIManager.instance.SetFaderOpacity(1f);
+        Time.timeScale = 1f;
+        SceneManager.instance.LoadScene("EndScene");
+    }
+
     public void TogglePause()
     {
         if (isGameEnding) return;
