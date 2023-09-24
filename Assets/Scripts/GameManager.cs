@@ -28,6 +28,24 @@ public class GameManager : MonoBehaviour
         isGameEnding = false;
         isGameRunning = false;
         isGamePaused = false;
+        StartCoroutine(FadeFromBlack(3));
+    }
+
+    public IEnumerator FadeFromBlack(float transitionDuration)
+    {
+        UIManager.instance.SetFaderOpacity(1);
+        yield return new WaitForSeconds(0.2f);
+
+        float elapsedTime = 0f;
+        while (elapsedTime < transitionDuration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsedTime/transitionDuration);
+            float alpha = Mathf.Lerp(1f, 0f, t);
+            UIManager.instance.SetFaderOpacity(alpha);
+            yield return null;
+        }
+        UIManager.instance.SetFaderOpacity(0);
     }
 
     private void Update()
@@ -48,6 +66,7 @@ public class GameManager : MonoBehaviour
         Moon.canMoveHorizontal = true;
         EnemiesSpawnManager.Instance.StartSpawn();
         UIManager.instance.ToggleGameUI(true);
+        UIManager.instance.ToggleTitle(false);
 
         FindObjectOfType<CameraController>().enabled = true;
     }
@@ -55,6 +74,7 @@ public class GameManager : MonoBehaviour
     [Button]
     public void EndGame()
     {
+        PlayerPrefs.SetInt("AlreadyPlayed", 1);
         StartCoroutine(EndGame(2));
     }
 

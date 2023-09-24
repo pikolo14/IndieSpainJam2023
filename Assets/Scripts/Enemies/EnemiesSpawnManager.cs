@@ -142,6 +142,12 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
 
         if(enemyType != typeof(CityEnemy))
         {
+            if(enemyType == typeof(WalkingEnemy) && !Moon.canMoveHorizontal)
+            {
+                GameManager.instance.StartGame();
+                return;
+            }
+
             UpdateDeadHumanCount(humanUnits);
             //Multiplicamos por una constante para obtener la puntuacion
             GameManager.instance.AddScore(humanUnits*10);

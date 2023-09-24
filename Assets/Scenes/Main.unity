@@ -123,6 +123,75 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &28627461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 28627462}
+  - component: {fileID: 28627463}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &28627462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28627461}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1647815645}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &28627463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28627461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9487b7c89f6e7b847a94a9aec86f8f02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  mixer: {fileID: 24100000, guid: baf75e44eeb61e0408e41e337480d286, type: 2}
+  sfxMixer: {fileID: 4047623461965356772, guid: baf75e44eeb61e0408e41e337480d286, type: 2}
+  musicMixer: {fileID: -1670278610278655756, guid: baf75e44eeb61e0408e41e337480d286, type: 2}
+  sounds:
+  - source: {fileID: 0}
+    name: 
+    _clip: {fileID: 0}
+    volume: 0.6
+    pitch: 1
+    mixer: 0
+    loop: 0
+    pitchRandMaxOffset: 0
+    originalPitch: 0
+    playable: 1
+  sfxVolume: 1
+  musicVolume: 1
 --- !u!1 &40860434 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7514176555376313103, guid: 472bd9634d28d33458ec46d1dfa16b49, type: 3}
@@ -1378,7 +1447,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 43e6fa95c223cde4c8bb4cada109f995, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 24de30275c2b4c743b2888d5d933809b, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1613,9 +1682,9 @@ MonoBehaviour:
   fader: {fileID: 974551309}
   healthBar: {fileID: 148413442}
   txtScore: {fileID: 76049114}
-  TitleCanvas: {fileID: 0}
-  FirstTitle: {fileID: 0}
-  RealTitle: {fileID: 0}
+  TitleCanvas: {fileID: 397601973}
+  FirstTitle: {fileID: 1223476600}
+  RealTitle: {fileID: 1387082647}
 --- !u!4 &1647815645
 Transform:
   m_ObjectHideFlags: 0
@@ -1631,6 +1700,7 @@ Transform:
   - {fileID: 629267084}
   - {fileID: 1625880427}
   - {fileID: 49752500}
+  - {fileID: 28627462}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
