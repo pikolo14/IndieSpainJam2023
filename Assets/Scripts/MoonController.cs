@@ -36,7 +36,7 @@ public class MoonController : MonoBehaviour
     private Collider2D col;
     [SerializeField, Range(0f, 3f)]
     private float currentCharge = 0f;
-    private MoonHealth moonHealth;
+    public MoonHealth moonHealth;
 
     private GameObject chargeBarLvl1, chargeBarLvl2, chargeBarLvl3;
 
@@ -167,6 +167,7 @@ public class MoonController : MonoBehaviour
         Camera.main.DOShakePosition(0.5f, 0.5f, 30);
         if (floorHitParticleSystem != null)
             Instantiate(floorHitParticleSystem, transform.position - Vector3.up * col.bounds.extents.y, Quaternion.identity);
+        AudioManager.self.PlayAdditively(SoundId.StoneCrush);
         yield return new WaitForSeconds(downTime);
         //-- Go up --
         while (elapsed > 0)
@@ -189,11 +190,12 @@ public class MoonController : MonoBehaviour
                 if (!enemy.TryKill(Mathf.FloorToInt(currentCharge)))
                     moonHealth.TakeDamage(1);
         }
-        else
+        else if (canAttack)
         {
             if (collision.TryGetComponent(out EnemyBase enemy))
                 moonHealth.TakeDamage(1);
         }
+        AudioManager.self.PlayAdditively(SoundId.Hit);
         //Instantiate(moonHitParticleSystem, collision.ClosestPoint(transform.position), Quaternion.identity);
     }
 

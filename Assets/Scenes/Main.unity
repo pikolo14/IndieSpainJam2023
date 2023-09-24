@@ -181,12 +181,112 @@ MonoBehaviour:
   musicMixer: {fileID: -1670278610278655756, guid: baf75e44eeb61e0408e41e337480d286, type: 2}
   sounds:
   - source: {fileID: 0}
-    name: 
-    _clip: {fileID: 0}
+    name: DestroyCity
+    _clip: {fileID: 8300000, guid: 73a8ee534e7f5144d9572deaf47916f9, type: 3}
     volume: 0.6
     pitch: 1
     mixer: 0
     loop: 0
+    pitchRandMaxOffset: 0.1
+    originalPitch: 0
+    playable: 1
+  - source: {fileID: 0}
+    name: MoonExplosion
+    _clip: {fileID: 8300000, guid: d43c5132e52b15d45b3573eacedc6b36, type: 3}
+    volume: 0.6
+    pitch: 1
+    mixer: 0
+    loop: 0
+    pitchRandMaxOffset: 0.1
+    originalPitch: 0
+    playable: 1
+  - source: {fileID: 0}
+    name: MissileLaunch
+    _clip: {fileID: 8300000, guid: 75b5a4b36a6fa3f469e623ce2652a0e7, type: 3}
+    volume: 0.6
+    pitch: 1
+    mixer: 0
+    loop: 0
+    pitchRandMaxOffset: 0.1
+    originalPitch: 0
+    playable: 1
+  - source: {fileID: 0}
+    name: RocketLaunch
+    _clip: {fileID: 8300000, guid: 046c2cd159c7bc342a20061b2b8eb33b, type: 3}
+    volume: 0.6
+    pitch: 1
+    mixer: 0
+    loop: 0
+    pitchRandMaxOffset: 0.1
+    originalPitch: 0
+    playable: 1
+  - source: {fileID: 0}
+    name: Hit
+    _clip: {fileID: 8300000, guid: b2e5944525f268f4b9acfa5fde437d06, type: 3}
+    volume: 0.6
+    pitch: 1
+    mixer: 0
+    loop: 0
+    pitchRandMaxOffset: 0.1
+    originalPitch: 0
+    playable: 1
+  - source: {fileID: 0}
+    name: SmallExplosion
+    _clip: {fileID: 8300000, guid: c794aa09c74b13040aa414c845dee148, type: 3}
+    volume: 0.6
+    pitch: 1
+    mixer: 0
+    loop: 0
+    pitchRandMaxOffset: 0.1
+    originalPitch: 0
+    playable: 1
+  - source: {fileID: 0}
+    name: Squish
+    _clip: {fileID: 8300000, guid: 5f30fb5aca38fd2419b26edb9d20b083, type: 3}
+    volume: 1
+    pitch: 1
+    mixer: 0
+    loop: 0
+    pitchRandMaxOffset: 0.1
+    originalPitch: 0
+    playable: 1
+  - source: {fileID: 0}
+    name: StoneCrush
+    _clip: {fileID: 8300000, guid: db60f3e8beec8da41959ac7c88777892, type: 3}
+    volume: 0.5
+    pitch: 1
+    mixer: 0
+    loop: 0
+    pitchRandMaxOffset: 0.1
+    originalPitch: 0
+    playable: 1
+  - source: {fileID: 0}
+    name: TanqueShoot
+    _clip: {fileID: 8300000, guid: 5e90e579283720949a274e1b6a42b11e, type: 3}
+    volume: 0.6
+    pitch: 1
+    mixer: 0
+    loop: 0
+    pitchRandMaxOffset: 0.1
+    originalPitch: 0
+    playable: 1
+  - source: {fileID: 0}
+    name: BGM
+    _clip: {fileID: 8300000, guid: 4bd25ad406b04bb47aa1f9adc025e300, type: 3}
+    volume: 0.6
+    pitch: 1
+    mixer: 1
+    loop: 1
+    pitchRandMaxOffset: 0
+    originalPitch: 0
+    playable: 1
+  - source: {fileID: 0}
+    name: Piano
+    _clip: {fileID: 8300000, guid: 438d409137270ed4ea17444fd4438a12, type: 3}
+    volume: 0.6
+    pitch: 1
+    mixer: 1
+    loop: 1
     pitchRandMaxOffset: 0
     originalPitch: 0
     playable: 1
@@ -1883,12 +1983,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7172088863484082242, guid: 9e875f038110a444aa3089e2ee1666ef, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7172088863484082242, guid: 9e875f038110a444aa3089e2ee1666ef, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1647815647}
+      objectReference: {fileID: 1647815646}
     - target: {fileID: 7172088863484082242, guid: 9e875f038110a444aa3089e2ee1666ef, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadScene
+      value: ExitGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 7172088863484082242, guid: 9e875f038110a444aa3089e2ee1666ef, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7172088863484082242, guid: 9e875f038110a444aa3089e2ee1666ef, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
@@ -1901,10 +2009,14 @@ PrefabInstance:
     - target: {fileID: 7760937072289364909, guid: 9e875f038110a444aa3089e2ee1666ef, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1647815647}
+      objectReference: {fileID: 1647815646}
     - target: {fileID: 7760937072289364909, guid: 9e875f038110a444aa3089e2ee1666ef, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartScene
+      value: Restart
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760937072289364909, guid: 9e875f038110a444aa3089e2ee1666ef, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2328,6 +2440,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5854332122979033518, guid: 472bd9634d28d33458ec46d1dfa16b49, type: 3}
+      propertyPath: MoonDeathParticleSystem
+      value: 
+      objectReference: {fileID: 5714925263083190883, guid: 05c1c9a7928e6ea4dbcd7d1fbbb26976, type: 3}
     - target: {fileID: 7033188009031352109, guid: 472bd9634d28d33458ec46d1dfa16b49, type: 3}
       propertyPath: m_RootOrder
       value: 5

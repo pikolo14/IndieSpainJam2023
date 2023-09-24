@@ -39,11 +39,12 @@ public class MoonHealth : MonoBehaviour
     private void Death()
     {
         OnDeath?.Invoke();
+        GetComponent<Collider2D>().enabled = false;
+        GetComponentInChildren<ParticleSystemForceField>().enabled = false;
         if (MoonDeathParticleSystem != null)
             Instantiate(MoonDeathParticleSystem, transform.position, Quaternion.identity);
-        GetComponent<Collider2D>().enabled = false;
-        GetComponent<SpriteRenderer>().enabled = false;
-        GetComponentInChildren<ParticleSystemForceField>().enabled = false;
+        AudioManager.self.PlayAdditively(SoundId.MoonExplosion);
+        GetComponentInChildren<SpriteRenderer>().enabled = false;
         GameManager.instance.EndGame();
     }
 
@@ -59,5 +60,16 @@ public class MoonHealth : MonoBehaviour
 
         anim.SetBool("Invulnerable", false);
         _invulnerable = false;
+    }
+    public void SetHealth(int health)
+    {
+        health = Mathf.Clamp(health, 0, maxHP);
+        remainingHP = health;
+        UIManager.instance.UpdateHealthPercentage((float)remainingHP / maxHP);
+    }
+
+    public void SetFullHealth()
+    {
+        SetHealth(maxHP);
     }
 }

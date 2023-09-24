@@ -101,6 +101,7 @@ public class ShooterEnemy : WalkingEnemy
     /// </summary>
     protected void Shoot()
     {
+        AudioManager.self.PlayAdditively(SoundId.TanqueShoot);
         Instantiate(BulletPrefab,CannonTip.position,CannonTip.rotation);
     }
 

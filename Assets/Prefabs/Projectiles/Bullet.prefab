@@ -94,8 +94,10 @@ MonoBehaviour:
   Deffense: 0
   Speed: 10
   RotationOffset: 0
+  score: 0
   spawnParticleSystem: {fileID: 0}
   deathParticleSystem: {fileID: 0}
+  deathSound: 4
   TimeToLive: 5
 --- !u!1 &5056799996710218350
 GameObject:

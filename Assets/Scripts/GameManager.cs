@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1f;
+        AudioManager.self.PlayOverriding(SoundId.Piano);
         isGameEnding = false;
         isGameRunning = false;
         isGamePaused = false;
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
         while (elapsedTime < transitionDuration)
         {
             elapsedTime += Time.unscaledDeltaTime;
-            float t = Mathf.Clamp01(elapsedTime/transitionDuration);
+            float t = Mathf.Clamp01(elapsedTime / transitionDuration);
             float alpha = Mathf.Lerp(1f, 0f, t);
             UIManager.instance.SetFaderOpacity(alpha);
             yield return null;
@@ -67,6 +68,8 @@ public class GameManager : MonoBehaviour
         EnemiesSpawnManager.Instance.StartSpawn();
         UIManager.instance.ToggleGameUI(true);
         UIManager.instance.ToggleTitle(false);
+        AudioManager.self.PlayOverriding(SoundId.BGM);
+        AudioManager.self.Stop(SoundId.Piano);
 
         FindObjectOfType<CameraController>().enabled = true;
     }
@@ -81,6 +84,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator EndGame(float transitionDuration)
     {
         yield return new WaitForSecondsRealtime(2.5f);
+        AudioManager.self.Stop(SoundId.BGM);
         isGameEnding = true;
         Time.timeScale = 0f;
         float elapsedTime = 0f;

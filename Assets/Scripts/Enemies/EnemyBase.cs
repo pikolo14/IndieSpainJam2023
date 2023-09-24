@@ -15,6 +15,8 @@ public abstract class EnemyBase : MonoBehaviour
 
     public GameObject spawnParticleSystem, deathParticleSystem;
 
+    public SoundId deathSound;
+
     protected float _orbitRadius;
     protected float _currentAngle = 0;
 
@@ -81,9 +83,10 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (deathParticleSystem != null)
             Instantiate(deathParticleSystem, transform.position, Quaternion.identity);
+        AudioManager.self.PlayAdditively(deathSound);
 
         System.Type derivedType = GetType();
-        EnemiesSpawnManager.Instance.EnemyDestroyed(derivedType,score);
+        EnemiesSpawnManager.Instance.EnemyDestroyed(derivedType, score);
 
         Destroy(gameObject);
     }

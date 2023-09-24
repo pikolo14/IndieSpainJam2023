@@ -101,6 +101,10 @@ MonoBehaviour:
   Deffense: 99
   Speed: 0.1
   RotationOffset: 90
+  score: 0
+  spawnParticleSystem: {fileID: 0}
+  deathParticleSystem: {fileID: 0}
+  deathSound: 5
 --- !u!61 &2767499002348539049
 BoxCollider2D:
   m_ObjectHideFlags: 0

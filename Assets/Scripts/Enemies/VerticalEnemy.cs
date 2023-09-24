@@ -47,6 +47,7 @@ public class VerticalEnemy : EnemyBase
 
         _moving = true;
         _fire.SetActive(true);
+        AudioManager.self.PlayAdditively(SoundId.RocketLaunch);
         StartCoroutine(TimeToLiveCorotine());
     }
 
