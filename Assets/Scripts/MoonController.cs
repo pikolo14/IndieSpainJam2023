@@ -21,6 +21,7 @@ public class MoonController : MonoBehaviour
     [Range(0f, 1f)]
     public float speedDuringCharge = .5f;
     public AnimationCurve chargeDownCurve, chargeUpCurve;
+    public GameObject chargeBar;
 
     [Header("References")]
     public GameObject moonHitParticleSystem;
@@ -36,6 +37,9 @@ public class MoonController : MonoBehaviour
     private float currentCharge = 0f;
     private MoonHealth moonHealth;
 
+    private GameObject chargeBarLvl1, chargeBarLvl2, chargeBarLvl3;
+
+
     private void Awake()
     {
         moonHealth = GetComponent<MoonHealth>();
@@ -48,6 +52,10 @@ public class MoonController : MonoBehaviour
         col = GetComponent<Collider2D>();
         startingOrbitRadius = orbitRadius;
         currentAngle = Mathf.PI / 2;
+        chargeBarLvl1 = chargeBar.transform.GetChild(0).gameObject;
+        chargeBarLvl2 = chargeBar.transform.GetChild(1).gameObject;
+        chargeBarLvl3 = chargeBar.transform.GetChild(2).gameObject;
+        DisableChargeBar();
     }
 
     private void Start()
@@ -70,16 +78,33 @@ public class MoonController : MonoBehaviour
     private void Attack()
     {
         if (Input.GetButtonDown("Jump") && !isChargingAttack && !isAttacking)
+        {
             isChargingAttack = true;
+            chargeBar.SetActive(true);
+        }
 
         if (isChargingAttack && Input.GetButton("Jump"))
         {
             currentCharge += chargeRate * Time.deltaTime;
             currentCharge = Mathf.Clamp(currentCharge, 0, maxCharge);
+            if (currentCharge >= 1) chargeBarLvl1.SetActive(true);
+            if (currentCharge >= 2) chargeBarLvl2.SetActive(true);
+            if (currentCharge >= 3) chargeBarLvl3.SetActive(true);
         }
 
         if (canAttack && isChargingAttack && Input.GetButtonUp("Jump"))
+        {
+            DisableChargeBar();
             StartCoroutine(AttackCoroutine(currentCharge));
+        }
+    }
+
+    private void DisableChargeBar()
+    {
+        chargeBarLvl1.SetActive(false);
+        chargeBarLvl2.SetActive(false);
+        chargeBarLvl3.SetActive(false);
+        chargeBar.SetActive(false);
     }
 
     private void Movement()
