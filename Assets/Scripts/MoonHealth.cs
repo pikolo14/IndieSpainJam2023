@@ -18,7 +18,7 @@ public class MoonHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if(!_invulnerable)
+        if (!_invulnerable)
         {
             remainingHP -= damage;
             if (remainingHP <= 0)
@@ -30,13 +30,14 @@ public class MoonHealth : MonoBehaviour
             {
                 StartCoroutine(InvulnerableCoroutine());
             }
-            UIManager.instance.UpdateHealthPercentage((float)remainingHP/maxHP);
+            UIManager.instance.UpdateHealthPercentage((float)remainingHP / maxHP);
         }
     }
 
     private void Death()
     {
         OnDeath?.Invoke();
+        Invoke(nameof(GameManager.instance.EndGame), 5f);
     }
 
     private IEnumerator InvulnerableCoroutine()

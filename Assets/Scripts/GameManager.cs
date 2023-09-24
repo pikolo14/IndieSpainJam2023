@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static LevelGlobals;
 
 
@@ -71,7 +72,7 @@ public class GameManager : MonoBehaviour
         UIManager.instance.ToggleGameUI(false);
         UIManager.instance.SetFaderOpacity(1f);
         Time.timeScale = 1f;
-        SceneManager.instance.LoadScene("02_Credits");
+        UIManager.instance.ToggleGameOverPanel(true);
     }
 
     public void TogglePause()
@@ -86,5 +87,10 @@ public class GameManager : MonoBehaviour
     {
         this.score += score;
         UIManager.instance.SetScoreValue(this.score);
+    }
+
+    public void Restart()
+    {
+        SceneManager.instance.RestartScene();
     }
 }

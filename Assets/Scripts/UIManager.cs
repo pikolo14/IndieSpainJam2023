@@ -6,7 +6,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
-    public GameObject pauseMenu, gameUI;
+    public GameObject pauseMenu, gameUI, gameOverPanel;
     public CanvasGroup fader;
     public Image healthBar;
 
@@ -41,5 +41,10 @@ public class UIManager : MonoBehaviour
     internal void SetScoreValue(int score)
     {
         txtScore.text = score.ToString("D6");
+    }
+
+    internal void ToggleGameOverPanel(bool on)
+    {
+        gameOverPanel.SetActive(on);
     }
 }
