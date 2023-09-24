@@ -8,12 +8,11 @@ public class CityEnemy : EnemyBase
 {
     public List<Sprite> Sprites;
     public GameObject LabelGO;
-    protected TextMeshPro _labelText;
+    protected TMP_Text _labelText;
     protected SpriteRenderer _renderer;
 
     protected float _height;
 
-    //TODO: Hacer parones aleatorios
 
     public override void Initialize(float angle, float orbitalRadius = -1)
     {
@@ -29,28 +28,21 @@ public class CityEnemy : EnemyBase
     {
         _renderer = GetComponent<SpriteRenderer>();
         _renderer.sprite = Sprites[Random.Range(0,Sprites.Count)];
-
-        _labelText = LabelGO.GetComponentInChildren<TextMeshPro>(true);
+        _labelText = LabelGO.GetComponentInChildren<TMP_Text>(true);
 
         //Defensa de ciudades siempre iguales a la carga maxima
         Deffense = Mathf.FloorToInt(LevelGlobals.Moon.maxCharge);
     }
 
-    protected override void OnDestroy()
+    public void SetLabelQuantity(int quantity)
     {
-        base.OnDestroy();
-        EnemiesSpawnManager.Instance.IncreaseDifficulty();
+        _labelText.text = quantity.ToString();
+        LabelGO.SetActive(quantity > 0);
     }
-
-    protected void ChangeLabel(string text)
+    protected override void Die()
     {
-        if (string.IsNullOrEmpty(text))
-        {
-            LabelGO.SetActive(true);
-            _labelText.text = text;
-        }
-        else
-            LabelGO.SetActive(false);
+        EnemiesSpawnManager.Instance.DestroyCity(this);
+        base.Die();
     }
 
     protected override void Move(){}

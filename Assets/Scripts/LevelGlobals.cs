@@ -20,7 +20,7 @@ public class LevelGlobals : Singleton<LevelGlobals>
         { typeof(OrbitalEnemy),0}
     };
 
-
+    
     private new void Awake()
     {
         base.Awake();

@@ -247,7 +247,7 @@ MonoBehaviour:
   Deffense: 1
   Speed: 10
   RotationOffset: -90
-  score: 50
+  score: 5
   spawnParticleSystem: {fileID: 0}
   deathParticleSystem: {fileID: 2213241952484315808, guid: 5b088fedc3f3cb848950983a690a0fb9, type: 3}
   LaunchDelay: 3

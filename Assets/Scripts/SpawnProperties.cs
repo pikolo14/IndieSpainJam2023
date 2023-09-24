@@ -9,6 +9,7 @@ public class SpawnProperties
 {
     [SerializeField]
     public EnemySpawnProperties Human, Rocket, Tank, Satellite;
+    public int NextDeadHumanGoal = 20;
 
     public void ResetElapsedTimes()
     {

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using static LevelGlobals;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -63,5 +65,4 @@ public class GameManager : MonoBehaviour
         this.score += score;
         UIManager.instance.SetScoreValue(this.score);
     }
-
 }

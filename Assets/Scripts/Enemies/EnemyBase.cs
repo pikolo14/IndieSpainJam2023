@@ -32,13 +32,6 @@ public abstract class EnemyBase : MonoBehaviour
         //Debug.Log(derivedType.ToString()+" spawned: "+ EnemiesCounts[derivedType]);
     }
 
-    protected virtual void OnDestroy()
-    {
-        System.Type derivedType = GetType();
-        EnemiesCounts[derivedType]--;
-        //Debug.Log(derivedType.ToString() + " spawned: " + EnemiesCounts[derivedType]);
-    }
-
     #endregion
 
     public virtual void Initialize(float angle, float orbitalRadius = -1)
@@ -88,7 +81,10 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (deathParticleSystem != null)
             Instantiate(deathParticleSystem, transform.position, Quaternion.identity);
-        GameManager.instance?.AddScore(score);
+
+        System.Type derivedType = GetType();
+        EnemiesSpawnManager.Instance.EnemyDestroyed(derivedType,score);
+
         Destroy(gameObject);
     }
 }

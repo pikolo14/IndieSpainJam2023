@@ -318,6 +318,7 @@ MonoBehaviour:
   Deffense: 0
   Speed: 1
   RotationOffset: -90
+  score: 200
   spawnParticleSystem: {fileID: 0}
   deathParticleSystem: {fileID: 0}
   Sprites:
@@ -325,7 +326,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d02fd6db6085410468bc6d15087be406, type: 3}
   - {fileID: 21300000, guid: dd5d7940e19fa594eb45907d5166729c, type: 3}
   LabelGO: {fileID: 5110820174741063647}
-  HeightOffset: 9
 --- !u!212 &3033157264029742717
 SpriteRenderer:
   m_ObjectHideFlags: 0

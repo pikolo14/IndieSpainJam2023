@@ -1,7 +1,11 @@
 using Sirenix.OdinInspector;
+using Sirenix.OdinInspector.Editor.GettingStarted;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using static LevelGlobals;
+
 
 public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
 {    
@@ -11,11 +15,12 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
     public float SpawnAngleRange = 45;
     public float SpawnDelayRandomVariation = 1;
     
-
     [Header("Difficulty")]
     public int CitiesNumber = 4;
     [ShowInInspector][ReadOnly]
     private int _currentDifficulty = -1;
+    private int _deadHumansCount = 0;
+    private List<CityEnemy> _cities = new List<CityEnemy>();
 
     [SerializeField]
     public List<SpawnProperties> SpawnPropertiesPerDifficulty;
@@ -32,11 +37,29 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
     {
         if(Spawning)
         {
-            UpdateEnemySpawning(HumanPrefab, ref CurrentSpawnProperties.Human, LevelGlobals.EnemiesCounts[typeof(WalkingEnemy)]);
-            UpdateEnemySpawning(RocketPrefab, ref CurrentSpawnProperties.Rocket, LevelGlobals.EnemiesCounts[typeof(VerticalEnemy)]);
-            UpdateEnemySpawning(TankPrefab, ref CurrentSpawnProperties.Tank, LevelGlobals.EnemiesCounts[typeof(ShooterEnemy)]);
-            UpdateEnemySpawning(SatellitePrefab, ref CurrentSpawnProperties.Satellite, LevelGlobals.EnemiesCounts[typeof(OrbitalEnemy)]);
+            UpdateEnemySpawning(HumanPrefab, ref CurrentSpawnProperties.Human, EnemiesCounts[typeof(WalkingEnemy)]);
+            UpdateEnemySpawning(RocketPrefab, ref CurrentSpawnProperties.Rocket, EnemiesCounts[typeof(VerticalEnemy)]);
+            UpdateEnemySpawning(TankPrefab, ref CurrentSpawnProperties.Tank, EnemiesCounts[typeof(ShooterEnemy)]);
+            UpdateEnemySpawning(SatellitePrefab, ref CurrentSpawnProperties.Satellite, EnemiesCounts[typeof(OrbitalEnemy)]);
         }
+    }
+
+
+    #region SPAWN
+
+    public void InitializeCities()
+    {
+        float from = Moon.currentAngle + SpawnAngleRange * Mathf.Deg2Rad / 2f;
+        float to = 2 * Mathf.PI + Moon.currentAngle - SpawnAngleRange * Mathf.Deg2Rad / 2f;
+        float increment = (to - from) / CitiesNumber;
+
+        for (float angle = from; angle <= to; angle += increment)
+        {
+            _cities.Add(SpawnEnemyAtAngle(CityPrefab, angle) as CityEnemy);
+        }
+
+        //Actualizar las labels
+        UpdateDeadHumanCount(0);
     }
 
     public void UpdateEnemySpawning(GameObject prefab, ref EnemySpawnProperties properties, int count)
@@ -60,25 +83,35 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
         float spawnAngleRads;
         if (outOfRange)
         {
-            float from = LevelGlobals.Moon.currentAngle + SpawnAngleRange * Mathf.Deg2Rad / 2f;
-            float to = 2*Mathf.PI + LevelGlobals.Moon.currentAngle - SpawnAngleRange*Mathf.Deg2Rad / 2f;
+            float from = Moon.currentAngle + SpawnAngleRange * Mathf.Deg2Rad / 2f;
+            float to = 2*Mathf.PI + Moon.currentAngle - SpawnAngleRange*Mathf.Deg2Rad / 2f;
             spawnAngleRads = Random.Range(from,to);
         }
         else
-            spawnAngleRads = LevelGlobals.Moon.currentAngle + Random.Range(-SpawnAngleRange * Mathf.Deg2Rad / 2f, SpawnAngleRange * Mathf.Deg2Rad / 2f);
+            spawnAngleRads = Moon.currentAngle + Random.Range(-SpawnAngleRange * Mathf.Deg2Rad / 2f, SpawnAngleRange * Mathf.Deg2Rad / 2f);
 
         SpawnEnemyAtAngle(prefab, spawnAngleRads);
     }
 
-    public void SpawnEnemyAtAngle(GameObject prefab, float spawnAngleRads)
+    public EnemyBase SpawnEnemyAtAngle(GameObject prefab, float spawnAngleRads)
     {
-        var go = Instantiate(prefab, LevelGlobals.PlanetTransform, true);
-        go.GetComponent<EnemyBase>().Initialize(spawnAngleRads);
+        var go = Instantiate(prefab, PlanetTransform, true);
+        var enemy = go.GetComponent<EnemyBase>();
+        enemy.Initialize(spawnAngleRads);
+
+        return enemy;
     }
 
-    public void IncreaseDifficulty()
+    #endregion
+
+
+    #region DIFICULTAD
+
+    private void IncreaseDifficulty()
     {
         SetDifficulty(_currentDifficulty + 1);
+        _deadHumansCount = 0;
+        UpdateDeadHumanCount(0);
     }
 
     private void SetDifficulty(int difficulty)
@@ -91,15 +124,45 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
         }
     }
 
-    public void InitializeCities()
-    {
-        float from = LevelGlobals.Moon.currentAngle + SpawnAngleRange * Mathf.Deg2Rad / 2f;
-        float to = 2 * Mathf.PI + LevelGlobals.Moon.currentAngle - SpawnAngleRange * Mathf.Deg2Rad / 2f;
-        float increment = (to - from) / CitiesNumber;
+    #endregion
 
-        for (float angle = from; angle <= to; angle+=increment)
+
+    #region DESTRUCCION DE ENEMIGOS
+
+    /// <summary>
+    /// Añade puntos y actualiza contadores cuando un enemigo muere
+    /// </summary>
+    /// <param name="enemyType"></param>
+    /// <param name="humanUnits">Equivalente en vidas humanas de ese enemigo</param>
+    public void EnemyDestroyed(System.Type enemyType, int humanUnits)
+    {
+        EnemiesCounts[enemyType]--;
+
+        if(enemyType != typeof(CityEnemy))
         {
-            SpawnEnemyAtAngle(CityPrefab, angle);
+            UpdateDeadHumanCount(humanUnits);
+            //Multiplicamos por una constante para obtener la puntuacion
+            GameManager.instance.AddScore(humanUnits*10);
         }
     }
+
+    public void DestroyCity(CityEnemy city)
+    {
+        _cities.Remove(city);
+        GameManager.instance.AddScore(city.score);
+        IncreaseDifficulty();
+    }
+
+    public void UpdateDeadHumanCount(int increment)
+    {
+        _deadHumansCount += increment;
+        int remainingHumans = SpawnPropertiesPerDifficulty[_currentDifficulty].NextDeadHumanGoal - _deadHumansCount;
+
+        foreach(var city in _cities)
+        {
+            city.SetLabelQuantity(remainingHumans);
+        }
+    }
+
+    #endregion
 }

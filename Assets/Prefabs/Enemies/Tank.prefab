@@ -50,7 +50,7 @@ MonoBehaviour:
   Deffense: 2
   Speed: 0.1
   RotationOffset: -90
-  score: 100
+  score: 8
   spawnParticleSystem: {fileID: 0}
   deathParticleSystem: {fileID: 2213241952484315808, guid: 5b088fedc3f3cb848950983a690a0fb9, type: 3}
   BulletPrefab: {fileID: 1142040468445331475, guid: d59d0ee7943bebe448dbd2f07ceacd4f, type: 3}
