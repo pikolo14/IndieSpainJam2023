@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
         Moon.canMoveHorizontal = true;
         EnemiesSpawnManager.Instance.StartSpawn();
         UIManager.instance.ToggleGameUI(true);
+
+        FindObjectOfType<CameraController>().enabled = true;
     }
 
     [Button]
