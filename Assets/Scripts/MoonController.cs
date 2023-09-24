@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MoonController : MonoBehaviour
 {
+    [Header("Options")]
+    public bool isActive = false;
+
     [Header("Orbit")]
     public Transform orbitTarget;
     public float orbitRadius = 1f;
@@ -22,13 +25,12 @@ public class MoonController : MonoBehaviour
 
     [HideInInspector]
     public float startingOrbitRadius = 1f;
-
     public float currentAngle = 0f;
+
     [SerializeField]
     private bool isAttacking, isChargingAttack;
     private Collider2D col;
-    [SerializeField]
-    [Range(0f, 3f)]
+    [SerializeField, Range(0f, 3f)]
     private float currentCharge = 0f;
 
     private void Awake()
@@ -41,6 +43,7 @@ public class MoonController : MonoBehaviour
         }
         col = GetComponent<Collider2D>();
         startingOrbitRadius = orbitRadius;
+        currentAngle = Mathf.PI / 2;
     }
 
     private void Start()
@@ -55,6 +58,7 @@ public class MoonController : MonoBehaviour
 
     void FixedUpdate()
     {
+        //if (!isActive) return;
         Movement();
         Rotation();
     }
@@ -76,15 +80,13 @@ public class MoonController : MonoBehaviour
 
     private void Movement()
     {
-        //if (isAttacking || isChargingAttack) return;
-        orbitTarget.position = orbitTarget.position;
-
         float inputValue = !(isAttacking || isChargingAttack) ? (Input.GetAxis("Horizontal") * -1f) : 0f;
 
         currentAngle += inputValue * orbitSpeed * Time.deltaTime; //By using GetAxis we already have acceleration
 
         float newX = (orbitTarget.position.x + orbitRadius + GetMoonRadius()) * Mathf.Cos(currentAngle);
         float newY = (orbitTarget.position.y + orbitRadius + GetMoonRadius()) * Mathf.Sin(currentAngle);
+        Debug.DrawLine(orbitTarget.position, new Vector2(newX, newY), Color.green, Time.deltaTime);
 
         transform.position = new Vector2(newX, newY);
     }
