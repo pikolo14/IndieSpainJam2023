@@ -50,10 +50,15 @@ MonoBehaviour:
   Deffense: 2
   Speed: 0.1
   RotationOffset: -90
+  score: 100
+  spawnParticleSystem: {fileID: 0}
+  deathParticleSystem: {fileID: 2213241952484315808, guid: 5b088fedc3f3cb848950983a690a0fb9, type: 3}
   BulletPrefab: {fileID: 1142040468445331475, guid: d59d0ee7943bebe448dbd2f07ceacd4f, type: 3}
   Cannon: {fileID: 4613848254306309525}
   CannonTip: {fileID: 3120439828874116133}
   ShootDelay: 1
+  ShootAngleRange: 90
+  right: 0
 --- !u!61 &-4092663359065053516
 BoxCollider2D:
   m_ObjectHideFlags: 0

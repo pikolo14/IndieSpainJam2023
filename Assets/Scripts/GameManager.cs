@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     public float matchTime = 300f;
     public float elapsedMatchTime = 0f;
+    public int score;
 
     private void Awake()
     {
@@ -27,9 +28,9 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel"))//Esc button
             TogglePause();
-        elapsedMatchTime += Time.deltaTime;
-        if (elapsedMatchTime >= matchTime)
-            StartCoroutine(EndGame(1f));
+        //elapsedMatchTime += Time.deltaTime;
+        //if (elapsedMatchTime >= matchTime)
+        //    StartCoroutine(EndGame(1f));
     }
     public IEnumerator EndGame(float transitionDuration)
     {
@@ -55,6 +56,12 @@ public class GameManager : MonoBehaviour
         isGamePaused = !isGamePaused;
         Time.timeScale = isGamePaused ? 0 : 1;
         UIManager.instance.TogglePauseMenu(isGamePaused);
+    }
+
+    public void AddScore(int score)
+    {
+        this.score += score;
+        UIManager.instance.SetScoreValue(this.score);
     }
 
 }

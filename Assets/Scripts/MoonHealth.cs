@@ -20,8 +20,7 @@ public class MoonHealth : MonoBehaviour
             remainingHP = 0;
             Death();
         }
-        //Update UI
-        UIManager.instance.UpdateHealth(remainingHP);
+        UIManager.instance.UpdateHealthPercentage((float)remainingHP/maxHP);
     }
 
     private void Death()

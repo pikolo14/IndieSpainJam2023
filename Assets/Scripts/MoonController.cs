@@ -30,13 +30,15 @@ public class MoonController : MonoBehaviour
     public float currentAngle = 0f;
 
     [SerializeField]
-    private bool isAttacking, isChargingAttack;
+    private bool isAttacking, isChargingAttack, canAttack = true;
     private Collider2D col;
     [SerializeField, Range(0f, 3f)]
     private float currentCharge = 0f;
+    private MoonHealth moonHealth;
 
     private void Awake()
     {
+        moonHealth = GetComponent<MoonHealth>();
         if (orbitTarget == null)
         {
             Debug.LogError("Target object not assigned.");
@@ -76,7 +78,7 @@ public class MoonController : MonoBehaviour
             currentCharge = Mathf.Clamp(currentCharge, 0, maxCharge);
         }
 
-        if (isChargingAttack && Input.GetButtonUp("Jump"))
+        if (canAttack && isChargingAttack && Input.GetButtonUp("Jump"))
             StartCoroutine(AttackCoroutine(currentCharge));
     }
 
@@ -121,6 +123,7 @@ public class MoonController : MonoBehaviour
 
     public IEnumerator AttackCoroutine(float attackCharge)
     {
+        canAttack = false;
         isChargingAttack = false;
         isAttacking = true;
         float elapsed = 0f;
@@ -135,10 +138,10 @@ public class MoonController : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         //-------------
+        isAttacking = false;
         //ToDo: Spawn ground hit particles
         yield return new WaitForSeconds(downTime);
         //ToDo: Screenshake?
-        isAttacking = false;
         //-- Go up --
         while (elapsed > 0)
         {
@@ -147,6 +150,7 @@ public class MoonController : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         //-------------
+        canAttack = true;
         currentCharge = 0f;
         yield return new WaitForEndOfFrame();
     }
@@ -155,8 +159,14 @@ public class MoonController : MonoBehaviour
     {
         if (isAttacking)
         {
-            if (collision.TryGetComponent<EnemyBase>(out EnemyBase enemy))
-                enemy.TryKill(Mathf.FloorToInt(currentCharge));
+            if (collision.TryGetComponent(out EnemyBase enemy))
+                if (!enemy.TryKill(Mathf.FloorToInt(currentCharge)))
+                    moonHealth.TakeDamage(1);
+        }
+        else
+        {
+            if (collision.TryGetComponent(out EnemyBase enemy))
+                moonHealth.TakeDamage(1);
         }
         //Instantiate(moonHitParticleSystem, collision.ClosestPoint(transform.position), Quaternion.identity);
     }

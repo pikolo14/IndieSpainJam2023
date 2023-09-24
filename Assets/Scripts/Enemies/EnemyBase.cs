@@ -9,7 +9,9 @@ public abstract class EnemyBase : MonoBehaviour
 {
     public int Deffense = 0;
     public float Speed = 1;
-    public float RotationOffset = 90;
+    public float RotationOffset = -90;
+
+    public int score = 0;
 
     public GameObject spawnParticleSystem, deathParticleSystem;
 
@@ -21,7 +23,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     #region COUNT
 
-    protected void OnEnable()
+    protected virtual void OnEnable()
     {
         System.Type derivedType = GetType();
         if (!EnemiesCounts.ContainsKey(derivedType))
@@ -30,7 +32,7 @@ public abstract class EnemyBase : MonoBehaviour
         //Debug.Log(derivedType.ToString()+" spawned: "+ EnemiesCounts[derivedType]);
     }
 
-    protected void OnDestroy()
+    protected virtual void OnDestroy()
     {
         System.Type derivedType = GetType();
         EnemiesCounts[derivedType]--;
@@ -86,8 +88,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (deathParticleSystem != null)
             Instantiate(deathParticleSystem, transform.position, Quaternion.identity);
+        GameManager.instance?.AddScore(score);
         Destroy(gameObject);
     }
-
-    //TODO: Actualizar contadores de cada tipo de enemigo en awake y destroy
 }

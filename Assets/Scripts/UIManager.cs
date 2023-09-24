@@ -1,12 +1,16 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
-    public GameObject pauseMenu;
+    public GameObject pauseMenu, gameUI;
     public CanvasGroup fader;
+    public Image healthBar;
+
+    public TextMeshProUGUI txtScore;
 
     private void Awake()
     {
@@ -18,13 +22,23 @@ public class UIManager : MonoBehaviour
         pauseMenu.SetActive(on);
     }
 
+    public void ToggleGameUI(bool on)
+    {
+        gameUI.SetActive(on);
+    }
+
     public void SetFaderOpacity(float opacity01)
     {
         fader.alpha = opacity01;
     }
 
-    public void UpdateHealth(int remainingHP)
+    public void UpdateHealthPercentage(float remainingHPPorcentage)
     {
-        throw new NotImplementedException();
+        healthBar.fillAmount = remainingHPPorcentage;
+    }
+
+    internal void SetScoreValue(int score)
+    {
+        txtScore.text = score.ToString("D6");
     }
 }
