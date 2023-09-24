@@ -159,6 +159,7 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
         Camera.main.DOShakePosition(1.5f, 1, 30);
         _cities.Remove(city);
         GameManager.instance.AddScore(city.score);
+        Moon.moonHealth.SetFullHealth();
         IncreaseDifficulty();
     }
 

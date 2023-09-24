@@ -856,31 +856,70 @@ MonoBehaviour:
   CitiesNumber: 4
   SpawnPropertiesPerDifficulty:
   - Human:
-      SpawnDelay: 1
-      MaxUnits: 5
+      SpawnDelay: 0.5
+      MaxUnits: 20
     Rocket:
-      SpawnDelay: 2
-      MaxUnits: 5
+      SpawnDelay: 5
+      MaxUnits: 0
     Tank:
-      SpawnDelay: 2
-      MaxUnits: 5
+      SpawnDelay: 10
+      MaxUnits: 0
     Satellite:
-      SpawnDelay: 2
-      MaxUnits: 5
-    NextDeadHumanGoal: 20
+      SpawnDelay: 10
+      MaxUnits: 0
+    NextDeadHumanGoal: 10
   - Human:
       SpawnDelay: 1
-      MaxUnits: 5
+      MaxUnits: 20
     Rocket:
       SpawnDelay: 2
-      MaxUnits: 5
+      MaxUnits: 15
     Tank:
-      SpawnDelay: 2
-      MaxUnits: 5
+      SpawnDelay: 10
+      MaxUnits: 0
     Satellite:
-      SpawnDelay: 2
-      MaxUnits: 5
+      SpawnDelay: 10
+      MaxUnits: 0
+    NextDeadHumanGoal: 25
+  - Human:
+      SpawnDelay: 3
+      MaxUnits: 20
+    Rocket:
+      SpawnDelay: 3
+      MaxUnits: 20
+    Tank:
+      SpawnDelay: 5
+      MaxUnits: 2
+    Satellite:
+      SpawnDelay: 10
+      MaxUnits: 0
+    NextDeadHumanGoal: 40
+  - Human:
+      SpawnDelay: 3
+      MaxUnits: 10
+    Rocket:
+      SpawnDelay: 3
+      MaxUnits: 20
+    Tank:
+      SpawnDelay: 5
+      MaxUnits: 3
+    Satellite:
+      SpawnDelay: 5
+      MaxUnits: 2
     NextDeadHumanGoal: 50
+  - Human:
+      SpawnDelay: 5
+      MaxUnits: 5
+    Rocket:
+      SpawnDelay: 3
+      MaxUnits: 20
+    Tank:
+      SpawnDelay: 5
+      MaxUnits: 3
+    Satellite:
+      SpawnDelay: 5
+      MaxUnits: 2
+    NextDeadHumanGoal: 80
   CurrentSpawnProperties:
     Human:
       SpawnDelay: 0

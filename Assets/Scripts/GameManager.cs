@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
         isGameEnding = false;
         isGameRunning = false;
         isGamePaused = false;
+        UIManager.instance.ToggleTitle(true);
         StartCoroutine(FadeFromBlack(3));
     }
 
