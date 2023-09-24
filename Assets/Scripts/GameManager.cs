@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         isGameRunning = true;
         isGameEnding = false;
-        Moon.isActive = true;
+        Moon.canMoveHorizontal = true;
         EnemiesSpawnManager.Instance.StartSpawn();
         UIManager.instance.ToggleGameUI(true);
     }
