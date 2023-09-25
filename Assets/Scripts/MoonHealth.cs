@@ -41,6 +41,7 @@ public class MoonHealth : MonoBehaviour
         OnDeath?.Invoke();
         GetComponent<Collider2D>().enabled = false;
         GetComponentInChildren<ParticleSystemForceField>().enabled = false;
+        Camera.main.DOShakePosition(1.5f, 1, 30);
         if (MoonDeathParticleSystem != null)
             Instantiate(MoonDeathParticleSystem, transform.position, Quaternion.identity);
         AudioManager.self.PlayAdditively(SoundId.MoonExplosion);

@@ -6,16 +6,17 @@ using static LevelGlobals;
 
 
 public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
-{    
+{
     public GameObject HumanPrefab, RocketPrefab, TankPrefab, SatellitePrefab, BulletPrefab, CityPrefab;
 
     private bool _spawning = false;
     public float SpawnAngleRange = 45;
     public float SpawnDelayRandomVariation = 1;
-    
+
     [Header("Difficulty")]
     public int CitiesNumber = 4;
-    [ShowInInspector][ReadOnly]
+    [ShowInInspector]
+    [ReadOnly]
     private int _currentDifficulty = -1;
     private int _deadHumansCount = 0;
     private List<CityEnemy> _cities = new List<CityEnemy>();
@@ -27,7 +28,7 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
 
     public void Update()
     {
-        if(_spawning)
+        if (_spawning)
         {
             UpdateEnemySpawning(HumanPrefab, ref CurrentSpawnProperties.Human, EnemiesCounts[typeof(WalkingEnemy)]);
             UpdateEnemySpawning(RocketPrefab, ref CurrentSpawnProperties.Rocket, EnemiesCounts[typeof(VerticalEnemy)]);
@@ -64,7 +65,7 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
     public void UpdateEnemySpawning(GameObject prefab, ref EnemySpawnProperties properties, int count)
     {
         //Comprobar que no se ha alcanzado limite de unidades
-        if(count < properties.MaxUnits)
+        if (count < properties.MaxUnits)
         {
             if (properties.ElapsedTime > properties.RealDelay)
             {
@@ -83,8 +84,8 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
         if (outOfRange)
         {
             float from = Moon.currentAngle + SpawnAngleRange * Mathf.Deg2Rad / 2f;
-            float to = 2*Mathf.PI + Moon.currentAngle - SpawnAngleRange*Mathf.Deg2Rad / 2f;
-            spawnAngleRads = Random.Range(from,to);
+            float to = 2 * Mathf.PI + Moon.currentAngle - SpawnAngleRange * Mathf.Deg2Rad / 2f;
+            spawnAngleRads = Random.Range(from, to);
         }
         else
             spawnAngleRads = Moon.currentAngle + Random.Range(-SpawnAngleRange * Mathf.Deg2Rad / 2f, SpawnAngleRange * Mathf.Deg2Rad / 2f);
@@ -115,7 +116,7 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
 
     private void SetDifficulty(int difficulty)
     {
-        if(difficulty != _currentDifficulty && difficulty < SpawnPropertiesPerDifficulty.Count) 
+        if (difficulty != _currentDifficulty && difficulty < SpawnPropertiesPerDifficulty.Count)
         {
             _currentDifficulty = difficulty;
             CurrentSpawnProperties = SpawnPropertiesPerDifficulty[difficulty];
@@ -137,9 +138,9 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
     {
         EnemiesCounts[enemyType]--;
 
-        if(enemyType != typeof(CityEnemy))
+        if (enemyType != typeof(CityEnemy))
         {
-            if(enemyType == typeof(WalkingEnemy) && !Moon.canMoveHorizontal)
+            if (enemyType == typeof(WalkingEnemy) && !Moon.canMoveHorizontal)
             {
                 GameManager.instance.StartGame();
                 return;
@@ -147,7 +148,7 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
 
             UpdateDeadHumanCount(humanUnits);
             //Multiplicamos por una constante para obtener la puntuacion
-            GameManager.instance.AddScore(humanUnits*10);
+            GameManager.instance.AddScore(humanUnits * 10);
         }
     }
 
@@ -167,10 +168,16 @@ public class EnemiesSpawnManager : Singleton<EnemiesSpawnManager>
         _deadHumansCount += increment;
         int remainingHumans = SpawnPropertiesPerDifficulty[_currentDifficulty].NextDeadHumanGoal - _deadHumansCount;
 
-        foreach(var city in _cities)
+        foreach (var city in _cities)
         {
             city.SetLabelQuantity(remainingHumans);
         }
+    }
+
+    public bool CanDestroyCity()
+    {
+        int remainingHumans = SpawnPropertiesPerDifficulty[_currentDifficulty].NextDeadHumanGoal - _deadHumansCount;
+        return remainingHumans <= 0;
     }
 
     #endregion

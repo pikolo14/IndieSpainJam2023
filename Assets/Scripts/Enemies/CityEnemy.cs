@@ -18,7 +18,7 @@ public class CityEnemy : EnemyBase
     {
         _currentAngle = angle;
         _height = GetComponentInChildren<Renderer>().bounds.size.y;
-        _orbitRadius = LevelGlobals.PlanetRadius + _height / 2f +0.03f;
+        _orbitRadius = LevelGlobals.PlanetRadius + _height / 2f + 0.03f;
 
         Locate();
         Orientate();
@@ -27,7 +27,7 @@ public class CityEnemy : EnemyBase
     protected void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
-        _renderer.sprite = Sprites[Random.Range(0,Sprites.Count)];
+        _renderer.sprite = Sprites[Random.Range(0, Sprites.Count)];
         _labelText = LabelGO.GetComponentInChildren<TMP_Text>(true);
 
         //Defensa de ciudades siempre iguales a la carga maxima
@@ -45,5 +45,16 @@ public class CityEnemy : EnemyBase
         base.Die();
     }
 
-    protected override void Move(){}
+    public override bool TryKill(int chargeDamage)
+    {
+        if (EnemiesSpawnManager.Instance.CanDestroyCity() && chargeDamage >= Deffense)
+        {
+            Die();
+            return true;
+        }
+
+        return false;
+    }
+
+    protected override void Move() { }
 }

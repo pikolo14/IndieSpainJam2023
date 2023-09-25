@@ -2485,6 +2485,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 40860434}
     - target: {fileID: 7266448626294785794, guid: 472bd9634d28d33458ec46d1dfa16b49, type: 3}
+      propertyPath: chargeRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7266448626294785794, guid: 472bd9634d28d33458ec46d1dfa16b49, type: 3}
       propertyPath: orbitTarget
       value: 
       objectReference: {fileID: 1133414246}

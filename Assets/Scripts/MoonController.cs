@@ -51,7 +51,6 @@ public class MoonController : MonoBehaviour
             return;
         }
         col = GetComponent<Collider2D>();
-        startingOrbitRadius = orbitRadius;
         currentAngle = Mathf.PI / 2;
         chargeBarLvl1 = chargeBar.transform.GetChild(0).gameObject;
         chargeBarLvl2 = chargeBar.transform.GetChild(1).gameObject;
@@ -62,6 +61,7 @@ public class MoonController : MonoBehaviour
     private void Start()
     {
         transform.position = (Vector2)orbitTarget.position + Vector2.up * (orbitRadius + GetMoonRadius());
+        startingOrbitRadius = orbitRadius;
     }
 
     void Update()
@@ -154,13 +154,12 @@ public class MoonController : MonoBehaviour
         float elapsed = 0f;
         float lowerLimit = orbitTarget.GetComponent<Collider2D>().bounds.extents.y;
 
-        float startingPos = orbitRadius;
         //-- Go down --
         while (elapsed < chargeTime)
         {
-            orbitRadius = Mathf.Lerp(startingPos, lowerLimit, chargeDownCurve.Evaluate(elapsed / chargeTime));
             elapsed = Mathf.Clamp(elapsed + Time.deltaTime, 0, chargeTime);
-            yield return new WaitForEndOfFrame();
+            orbitRadius = Mathf.Lerp(startingOrbitRadius, lowerLimit, chargeDownCurve.Evaluate(elapsed / chargeTime));
+            yield return null;
         }
         //-------------
         isAttacking = false;
@@ -168,18 +167,18 @@ public class MoonController : MonoBehaviour
         if (floorHitParticleSystem != null)
             Instantiate(floorHitParticleSystem, transform.position - Vector3.up * col.bounds.extents.y, Quaternion.identity);
         AudioManager.self.PlayAdditively(SoundId.StoneCrush);
-        yield return new WaitForSeconds(downTime);
+        yield return new WaitForSecondsRealtime(downTime);
         //-- Go up --
         while (elapsed > 0)
         {
-            orbitRadius = Mathf.Lerp(startingPos, lowerLimit, chargeUpCurve.Evaluate(elapsed / recoveryTime));
+            orbitRadius = Mathf.Lerp(startingOrbitRadius, lowerLimit, chargeUpCurve.Evaluate(elapsed / recoveryTime));
             elapsed = Mathf.Clamp(elapsed - Time.deltaTime, 0, recoveryTime);
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
         //-------------
         canAttack = true;
         currentCharge = 0f;
-        yield return new WaitForEndOfFrame();
+        yield return null;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -187,12 +186,12 @@ public class MoonController : MonoBehaviour
         if (isAttacking)
         {
             if (collision.TryGetComponent(out EnemyBase enemy))
-                if (!enemy.TryKill(Mathf.FloorToInt(currentCharge)))
+                if (!enemy.TryKill(Mathf.FloorToInt(currentCharge)) && !(enemy is CityEnemy))
                     moonHealth.TakeDamage(1);
         }
         else if (canAttack)
         {
-            if (collision.TryGetComponent(out EnemyBase enemy))
+            if (collision.TryGetComponent(out EnemyBase enemy) && !(enemy is CityEnemy))
                 moonHealth.TakeDamage(1);
         }
         AudioManager.self.PlayAdditively(SoundId.Hit);
